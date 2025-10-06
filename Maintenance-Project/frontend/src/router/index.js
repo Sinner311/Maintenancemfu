@@ -92,6 +92,7 @@ const MLogin = () => import('@/pages/view/Login')
 //Admin
 const ATheContainer = () => import('@/components/admin/TheContainer')
 const AReportList = () => import('@/pages/admin/ReportList')
+const AReportDetail = () => import('@/pages/admin/ReportDetail')
 
 Vue.use(Router)
 
@@ -535,7 +536,7 @@ export default new Router({
 
           ]
         },
-                {
+        {
           path: 'admin',
           redirect: 'admin/reportlist',
           name: 'MHome',
@@ -546,10 +547,16 @@ export default new Router({
               name: 'AReportList',
               component: AReportList
             },
+            {
+              path: 'reportlist/:ticket_id',
+              name: 'AReportDetail',
+              component: AReportDetail,
+              props: true,  // เพื่อให้รับค่า ticket_id เป็น props ได้เลย
+            },
 
           ]
         },
-                {
+        {
           path: 'supervisor',
           redirect: 'supervisor/dashboard',
           name: 'MHome',
@@ -563,7 +570,7 @@ export default new Router({
 
           ]
         },
-                {
+        {
           path: 'technician',
           redirect: 'technician/dashboard',
           name: 'MHome',
