@@ -551,7 +551,7 @@ export default new Router({
               path: 'reportlist/:ticket_id',
               name: 'AReportDetail',
               component: AReportDetail,
-              props: true,  // เพื่อให้รับค่า ticket_id เป็น props ได้เลย
+              props: true,  // เพื่อให้รับค่า ticket_id เป็น props ได้เลยwew
             },
 
           ]
