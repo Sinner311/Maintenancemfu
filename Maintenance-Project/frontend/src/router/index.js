@@ -93,6 +93,9 @@ const MLogin = () => import('@/pages/view/Login')
 const ATheContainer = () => import('@/components/admin/TheContainer')
 const AReportList = () => import('@/pages/admin/ReportList')
 const AReportDetail = () => import('@/pages/admin/ReportDetail')
+//user
+const Userhomepage = () => import('@/pages/user/mainuser')
+const Ucontainer =() => import('@/components/user/Ucontainer')
 
 Vue.use(Router)
 
@@ -524,16 +527,15 @@ export default new Router({
         },
         {
           path: 'user',
-          redirect: 'user/dashboard',
+          redirect: 'user/mainuser',
           name: 'MHome',
-          component: TheContainer,
+          component: Ucontainer,
           children: [
             {
-              path: 'dashboard',
-              name: 'Dashboard',
-              component: Dashboard
+              path: 'mainuser',
+              name: 'Userhomepage',
+              component: Userhomepage
             },
-
           ]
         },
         {
