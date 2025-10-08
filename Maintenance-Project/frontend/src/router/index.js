@@ -93,6 +93,8 @@ const MLogin = () => import('@/pages/view/Login')
 const ATheContainer = () => import('@/components/admin/TheContainer')
 const AReportList = () => import('@/pages/admin/ReportList')
 const AReportDetail = () => import('@/pages/admin/ReportDetail')
+const ABuildingManagement = () => import('@/pages/admin/BuildingManagement')
+const AJobTypeManagement = () => import('@/pages/admin/JobTypeManagement')
 //user
 const Userhomepage = () => import('@/pages/user/mainuser')
 const Ucontainer =() => import('@/components/user/Ucontainer')
@@ -553,7 +555,19 @@ export default new Router({
               path: 'reportlist/:ticket_id',
               name: 'AReportDetail',
               component: AReportDetail,
-              props: true,  // เพื่อให้รับค่า ticket_id เป็น props ได้เลยwew
+              props: true, 
+            },
+            {
+              path: 'job-type',
+              name: 'AJobTypeManagement',
+              component: AJobTypeManagement,
+              props: true,  
+            },
+            {
+              path: 'building',
+              name: 'ABuildingManagement',
+              component: ABuildingManagement,
+              props: true,  
             },
 
           ]

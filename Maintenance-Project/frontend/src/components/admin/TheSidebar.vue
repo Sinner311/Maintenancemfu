@@ -45,19 +45,19 @@ export default {
           {
             _name: 'CSidebarNavItem',
             name: 'จัดการข้อมูล เจ้าหน้าที่',
-            to: '/theme/colors',
+            to: '/mockup/admin/reportlist',
             icon: 'cil-people'
           },
           {
             _name: 'CSidebarNavItem',
             name: 'จัดการข้อมูล ประเภทงาน',
-            to: '/theme/typography',
+            to: '/mockup/admin/job-type',
             icon: 'cil-briefcase'
           },
                     {
             _name: 'CSidebarNavItem',
             name: 'จัดการข้อมูล อาคาร',
-            to: '/theme/typography',
+            to: '/mockup/admin/building',
             icon: 'cil-building'
           },
         ]
