@@ -1,41 +1,37 @@
 <template>
-<div>
-     <CRow>
-  <CCol md="12">
-    <CCard style="height: 100px;">
-      <ureportbutton />
-    </CCard>
-  </CCol>
-</CRow>
-
+  <div>
+    <!-- ส่วนเนื้อหาหลัก -->
     <CRow>
       <CCol md="12">
         <CCard>
           <CCardHeader>
-            <h4 class="card-title mb-0 ">รายการแจ้งซ่อมของฉัน</h4>
+            <h4 class="card-title mb-0">รายการแจ้งซ่อมของฉัน</h4>
           </CCardHeader>
-          <Ureportable/> 
+          <Ureportable />
         </CCard>
       </CCol>
     </CRow>
+
     <CRow>
       <CCol md="12">
         <CCard>
           <CCardHeader>
             <h4 class="card-title mb-0">ประวัติแจ้งซ่อมของฉัน</h4>
           </CCardHeader>
-          <Uhistorytable/> 
+          <Uhistorytable />
         </CCard>
       </CCol>
     </CRow>
-   
+
+    <button class="sticky-btn">
+       + แจ้งซ่อม 
+    </button>
   </div>
-  
 </template>
 
 <script>
 import Uhistorytable from '../../components/user/Uhistorytable.vue';
-import Ureportable from '../../components/user/Ureportable.vue'
+import Ureportable from '../../components/user/Ureportable.vue';
 import Ureportbutton from '../../components/user/Ureportbutton.vue';
 
 export default {
@@ -45,83 +41,48 @@ export default {
     Ureportbutton,
     Uhistorytable
   },
-  data () {
+  data() {
     return {
-      selected: 'Month',
-      tableItems: [
-        {
-          avatar: { url: 'img/avatars/1.jpg', status: 'success' },
-          user: { name: 'Yiorgos Avraamu', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'USA', flag: 'cif-us' },
-          usage: { value: 50, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Mastercard', icon: 'cib-cc-mastercard' },
-          activity: '10 sec ago'
-        },
-        {
-          avatar: { url: 'img/avatars/2.jpg', status: 'danger' },
-          user: { name: 'Avram Tarasios', new: false, registered: 'Jan 1, 2015' },
-          country: { name: 'Brazil', flag: 'cif-br' },
-          usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Visa', icon: 'cib-cc-visa' },
-          activity: '5 minutes ago'
-        },
-        {
-          avatar: { url: 'img/avatars/3.jpg', status: 'warning' },
-          user: { name: 'Quintin Ed', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'India', flag: 'cif-in' },
-          usage: { value: 74, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Stripe', icon: 'cib-stripe' },
-          activity: '1 hour ago'
-        },
-        {
-          avatar: { url: 'img/avatars/4.jpg', status: '' },
-          user: { name: 'Enéas Kwadwo', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'France', flag: 'cif-fr' },
-          usage: { value: 98, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'PayPal', icon: 'cib-paypal' },
-          activity: 'Last month'
-        },
-        {
-          avatar: { url: 'img/avatars/5.jpg', status: 'success' },
-          user: { name: 'Agapetus Tadeáš', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'Spain', flag: 'cif-es' },
-          usage: { value: 22, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Google Items', icon: 'cib-google-pay' },
-          activity: 'Last week'
-        },
-        {
-          avatar: { url: 'img/avatars/6.jpg', status: 'danger' },
-          user: { name: 'Friderik Dávid', new: true, registered: 'Jan 1, 2015' },
-          country: { name: 'Poland', flag: 'cif-pl' },
-          usage: { value: 43, period: 'Jun 11, 2015 - Jul 10, 2015' },
-          payment: { name: 'Amex', icon: 'cib-cc-amex' },
-          activity: 'Last week'
-        }
-      ],
-      tableFields: [
-        { key: 'ticket_id', label: 'เลขที่แจ้งซ่อม', _classes: 'text-center' },
-        { key: 'user', label: 'ชื่อผู้แจ้ง' },
-        { key: 'country', label: 'ผู้ดูแลงาน', _classes: 'text-center' },
-        { key: 'usage' },
-        { key: 'payment', label: 'Payment method', _classes: 'text-center' },
-        { key: 'activity' },
-      ]
+      selected: 'Month'
     }
   },
   methods: {
-    color (value) {
+    color(value) {
       let $color
-      if (value <= 25) {
-        $color = 'info'
-      } else if (value > 25 && value <= 50) {
-        $color = 'success'
-      } else if (value > 50 && value <= 75) {
-        $color = 'warning'
-      } else if (value > 75 && value <= 100) {
-        $color = 'danger'
-      }
+      if (value <= 25) $color = 'info'
+      else if (value > 25 && value <= 50) $color = 'success'
+      else if (value > 50 && value <= 75) $color = 'warning'
+      else if (value > 75 && value <= 100) $color = 'danger'
       return $color
     }
   }
 }
 </script>
+
+<style scoped>
+/* Sticky Button*/
+.sticky-btn {
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  background-color: #2eb85c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  border: 2px solid #000000;
+  padding: 18px 36px;
+  font-size: 20px;          
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sticky-btn:hover {
+  background-color: #24994a;
+  transform: translateY(-3px);
+}
+</style>
