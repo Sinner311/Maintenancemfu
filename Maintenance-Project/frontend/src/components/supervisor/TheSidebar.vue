@@ -32,34 +32,20 @@ export default {
       navs: [{
         _name: 'CSidebarNav',
         _children: [
-          // {
-          //   _name: 'CSidebarNavTitle',
-          //   _children: ['Admin']
-          // },
+          
           {
             _name: 'CSidebarNavItem',
-            name: 'งานซ่อม',
-            to: '/mockup/admin/reportlist',
+            name: 'test',
+            to: '/mockup/supervisor/test',
             icon: 'cil-window-restore'
           },
           {
             _name: 'CSidebarNavItem',
-            name: 'จัดการข้อมูล เจ้าหน้าที่',
-            to: '/mockup/admin/UsersList',
+            name: 'จัดการข้อมูลพนักงานช่าง',
+            to: '/mockup/supervisor/UsersListSUP',
             icon: 'cil-people'
           },
-          {
-            _name: 'CSidebarNavItem',
-            name: 'จัดการข้อมูล ประเภทงาน',
-            to: '/mockup/admin/job-type',
-            icon: 'cil-briefcase'
-          },
-                    {
-            _name: 'CSidebarNavItem',
-            name: 'จัดการข้อมูล อาคาร',
-            to: '/mockup/admin/building',
-            icon: 'cil-building'
-          },
+          
         ]
       }]
     }
