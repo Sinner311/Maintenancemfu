@@ -99,6 +99,10 @@ const AJobTypeManagement = () => import('@/pages/admin/JobTypeManagement')
 const Userhomepage = () => import('@/pages/user/mainuser')
 const Ucontainer =() => import('@/components/user/Ucontainer')
 
+const AUsersList = () => import('@/pages/admin/UsersList')
+//Supervisor
+const AUsersListSUP = () => import('@/pages/supervisor/UsersListSUP')
+const Atest = () => import('@/pages/supervisor/test')
 Vue.use(Router)
 
 export default new Router({
@@ -569,19 +573,32 @@ export default new Router({
               component: ABuildingManagement,
               props: true,  
             },
-
+            
+            {
+              path: 'UsersList',
+              name: 'AUsersList',
+              component: AUsersList,
+            
+            },
           ]
         },
         {
           path: 'supervisor',
-          redirect: 'supervisor/dashboard',
+          redirect: 'supervisor/UsersListSUP',
           name: 'MHome',
           component: TheContainer,
           children: [
             {
-              path: 'dashboard',
-              name: 'Dashboard',
-              component: Dashboard
+              path: 'test',
+              name: 'Atest',
+              component: Atest
+            },
+
+            {
+              path: 'UsersListSUP',
+              name: 'AUsersListSUP',
+              component: AUsersListSUP,
+            
             },
 
           ]
