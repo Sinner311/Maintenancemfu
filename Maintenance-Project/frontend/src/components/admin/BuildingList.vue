@@ -1,116 +1,154 @@
 <template>
   <CCardBody>
-    
-    <CDataTable
-      :items="ticketsData"
-      :fields="fields"
-      column-filter
-      table-filter
-      items-per-page-select
-      :items-per-page="5"
-      hover
-      sorter
-      pagination
-    >
-    <template #reported_datetime="{ item }">
-        <td>
-          <div>{{ item.reported_at_time }} น.</div>
-          <div class="small">{{ item.reported_at_date }}</div>
-        </td>
-      </template>
-      <template #issue_user="{ item }">
-        <td>
-          <div>{{ item.category }} | {{ item.issue_detail }}</div>
-          <div class="small text-muted">ผู้แจ้ง: {{ item.username }}</div>
-        </td>
-      </template>
-      <template #status="{ item }">
-        <td>
-          <CBadge :color="getBadge(item.status)">
-            {{ item.status }}
-          </CBadge>
-        </td>
-      </template>
-      <template #show_details="{ item, index }">
-        <td class="py-2">
-<CButton
-  color="primary"
-  variant="outline"
-  square
-  size="sm"
-  @click="toggleDetails(item, index)"
->
-  +
-</CButton>
+    <div class="ml-auto mr-3 mb-3 col-20">
+      <CButton block color="info" shape="pill" @click="openAddModal"
+        >เพิ่มอาคาร</CButton
+      >
+    </div>
 
+    <CDataTable :items="buildingsData" :fields="fields" hover pagination>
+      <!-- แสดงชื่อแผนก -->
+      <template #departmentName="{ item }">
+        <td>
+          <strong>{{ item.departmentName }}</strong>
         </td>
       </template>
-      <template #details="{ item }">
-        <CCollapse :show="Boolean(item._toggled)" :duration="collapseDuration">
-          <CCardBody>
-            <CMedia :aside-image-props="{ height: 102 }">
-              <h4>
-                {{ item.username }}
-              </h4>
-              <p class="text-muted">User since: {{ item.reported_at }}</p>
-              <CButton size="sm" color="info" class=""> User Settings </CButton>
-              <CButton size="sm" color="danger" class="ml-1"> Delete </CButton>
-            </CMedia>
-          </CCardBody>
-        </CCollapse>
+
+      <!-- Column: subCategories (table ย่อย) -->
+      <template #subCategories="{ item }">
+        <table class="table table-sm table-bordered mb-0 fixed-table">
+          <thead>
+            <tr>
+              <th class="col-70">ชื่อประเภทงาน</th>
+              <th class="col-30">SLA (ชั่วโมง)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(sub, index) in item.subCategories" :key="index">
+              <td>{{ sub.name }}</td>
+              <td>{{ sub.slaHours }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </template>
+
+      <!-- ปุ่มแสดงรายละเอียด -->
+      <template #show_details="{ item }">
+        <td class="py-2 text-center">
+          <CCol>
+            <CRow>
+              <CButton
+                size="sm"
+                variant="outline"
+                color="danger"
+                class="ml-2"
+                shape="pill"
+                @click="deleteDepartment(item)"
+              >
+                ลบ
+              </CButton></CRow
+            >
+          </CCol>
+        </td>
       </template>
     </CDataTable>
+
+    <!-- Modal เพิ่มหน่วยงานใหม่ -->
+    <CModal title="เพิ่มอาคารใหม่" size="md" :show.sync="addModal">
+      <div>
+        <CInput
+          label="ชื่ออาคาร"
+          placeholder="กรอกชื่ออาคาร...."
+          v-model="newDepartmentName"
+        />
+      </div>
+
+      <template #footer>
+        <CButton color="secondary" @click="addModal = false">ยกเลิก</CButton>
+        <CButton color="success" @click="addDepartment">เพิ่ม</CButton>
+      </template>
+    </CModal>
+
+    
   </CCardBody>
 </template>
 
 <script>
-import ticketsData from "../data/TicketsData";
-
-const fields = [
-  { key: "ticket_number", label: "เลขที่แจ้งซ่อม", _style: "width:20%" },
-  { key: "reported_datetime", label: "วันที่แจ้ง", _style: "width:10%;" },
-  { key: "issue_user", label: "รายละเอียด", _style: "width:60%;" },
-  { key: "status", label: "สถาณะ", _style: "width:10%;" },
-  {
-    key: "show_details",
-    label: "",
-    _style: "width:1%",
-    sorter: false,
-    filter: false,
-  },
-];
+import { CCol } from "@coreui/vue-pro";
+import buildingsData from "../data/BuildingsData";
 
 export default {
-  name: "AdvancedTables",
+  name: "JobTypeManagement",
   data() {
     return {
-      ticketsData: ticketsData.map((item, id) => {
-        return { ...item, id,issue_user: `${item.category} ${item.issue_detail} ${item.username}`};
-      }),
-      fields,
-      details: [],
-      collapseDuration: 0,
+      buildingsData,
+      fields: [
+        { key: "building_name", label: "ชื่ออาคาร", _style: "width:20%" },
+        {
+          key: "show_details",
+          label: "",
+          _style: "width:5%",
+          sorter: false,
+          filter: false,
+        },
+      ],
+      addModal: false,
+      selectedDepartment: null,
+      newDepartmentName: "",
     };
   },
   methods: {
-    getBadge(status) {
-      switch (status) {
-        case "กำลังดำเนินการ":
-          return "success";
-        case "เสร็จสิ้น":
-          return "secondary";
-        case "รับเรื่องแล้ว":
-          return "warning";
-        case "รอดำเนินการ":
-          return "danger";
-        default:
-          "primary";
-      }
+    openAddModal() {
+      this.newDepartmentName = "";
+      this.addModal = true;
     },
-  toggleDetails(item) {
-    // ไปยังหน้าใหม่ตาม ticket_id
-    this.$router.push(`/mockup/admin/reportlist/${item.ticket_id}`);
-  },
+
+    addDepartment() {
+      if (!this.newDepartmentName.trim()) {
+        alert("กรุณากรอกชื่อหน่วยงานก่อน");
+        return;
+      }
+
+      const newDept = {
+        _id: { $oid: new Date().getTime().toString() }, // สร้าง id จำลอง
+        departmentName: this.newDepartmentName,
+        subCategories: [],
+      };
+
+      this.buildingsData.push(newDept);
+      this.addModal = false;
+    },
   },
 };
 </script>
+
+<style scoped>
+ul {
+  list-style-type: disc;
+}
+.fixed-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.fixed-table th,
+.fixed-table td {
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+}
+
+.col-70 {
+  width: 70%;
+}
+
+.col-30 {
+  width: 30%;
+}
+.col-20 {
+  width: 20%;
+}
+.col-10 {
+  width: 10%;
+}
+</style>

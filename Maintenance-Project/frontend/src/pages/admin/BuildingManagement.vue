@@ -6,7 +6,7 @@
           <CCardHeader>
             <h4 class="card-title mb-0">จัดการข้อมูล อาคาร</h4>
           </CCardHeader>
-          <DemoTable/>
+          <BuildingList/>
         </CCard>
       </CCol>
     </CRow>
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import DemoTable from '../../components/admin/DemoTable'
+import BuildingList from '../../components/admin/BuildingList'
 
 export default {
   name: 'Dashboard',
   components: {
-    DemoTable
+    BuildingList
   },
   data () {
     return {
