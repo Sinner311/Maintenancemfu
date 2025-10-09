@@ -109,7 +109,7 @@ export default {
     },
   toggleDetails(item) {
     // ไปยังหน้าใหม่ตาม ticket_id
-    this.$router.push(`/mockup/admin/reportlist/${item.ticket_id}`);
+    // this.$router.push(`/mockup/admin/reportlist/${item.ticket_id}`);
   },
   },
 };
