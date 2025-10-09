@@ -35,15 +35,30 @@
       <!-- ปุ่มแสดงรายละเอียด -->
       <template #show_details="{ item }">
         <td class="py-2 text-center">
-          <CButton
-            color="info"
-            variant="outline"
-            size="sm"
-            @click="openEditModal(item)"
-            shape="pill"
-          >
-            แก้ไข
-          </CButton>
+          <CCol>
+            <CRow class="mb-2">
+              <CButton
+                color="info"
+                variant="outline"
+                size="sm"
+                @click="openEditModal(item)"
+                shape="pill"
+              >
+                แก้ไข
+              </CButton></CRow
+            ><CRow>
+              <CButton
+                size="sm"
+                variant="outline"
+                color="danger"
+                class="ml-2"
+                shape="pill"
+                @click="deleteDepartment(item)"
+              >
+                ลบ
+              </CButton></CRow
+            >
+          </CCol>
         </td>
       </template>
     </CDataTable>
@@ -130,6 +145,7 @@
 </template>
 
 <script>
+import { CCol } from "@coreui/vue-pro";
 import categoriesData from "../data/CategoriesData";
 
 export default {
