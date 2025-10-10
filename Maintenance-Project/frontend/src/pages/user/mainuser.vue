@@ -23,9 +23,10 @@
       </CCol>
     </CRow>
 
-    <button class="sticky-btn">
+    <button class="sticky-btn" @click="sendReportModal = true">
        + แจ้งซ่อม 
     </button>
+    <SendReport v-model="sendReportModal" />
   </div>
 </template>
 
@@ -33,17 +34,20 @@
 import Uhistorytable from '../../components/user/Uhistorytable.vue';
 import Ureportable from '../../components/user/Ureportable.vue';
 import Ureportbutton from '../../components/user/Ureportbutton.vue';
+import SendReport from '../../components/user/SendReport';
 
 export default {
   name: 'Dashboard',
   components: {
     Ureportable,
     Ureportbutton,
-    Uhistorytable
+    Uhistorytable,
+    SendReport
   },
   data() {
     return {
-      selected: 'Month'
+      selected: 'Month',
+      sendReportModal: false,
     }
   },
   methods: {
