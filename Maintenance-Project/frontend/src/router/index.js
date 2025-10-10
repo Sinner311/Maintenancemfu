@@ -95,16 +95,22 @@ const AReportList = () => import('@/pages/admin/ReportList')
 const AReportDetail = () => import('@/pages/admin/ReportDetail')
 const ABuildingManagement = () => import('@/pages/admin/BuildingManagement')
 const AJobTypeManagement = () => import('@/pages/admin/JobTypeManagement')
-//user
+const AUsersList = () => import('@/pages/admin/UsersList')
+//User
 const Userhomepage = () => import('@/pages/user/mainuser')
 const Ucontainer =() => import('@/components/user/Ucontainer')
 
-const AUsersList = () => import('@/pages/admin/UsersList')
-//Supervisor
-const AUsersListSUP = () => import('@/pages/supervisor/UsersListSUP')
-const Atest = () => import('@/pages/supervisor/test')
-Vue.use(Router)
 
+//Supervisor
+const STheContainer = () => import('@/components/supervisor/TheContainer')
+const SUsersListSUP = () => import('@/pages/supervisor/UsersListSUP')
+const SReportList = () => import('@/pages/supervisor/ReportList')
+const SReportDetail = () => import('@/pages/supervisor/ReportDetail')
+Vue.use(Router)
+//Technician
+const TReportDetail = () => import('@/pages/technician/ReportDetail')
+const TTheContainer = () => import('@/components/technician/TheContainer')
+const TReportList = () => import('@/pages/technician/ReportList')
 export default new Router({
   mode: 'hash', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'open active',
@@ -584,20 +590,25 @@ export default new Router({
         },
         {
           path: 'supervisor',
-          redirect: 'supervisor/UsersListSUP',
+          redirect: 'supervisor/reportlist',
           name: 'MHome',
-          component: TheContainer,
+          component: STheContainer,
           children: [
             {
-              path: 'test',
-              name: 'Atest',
-              component: Atest
+              path: 'reportlist',
+              name: 'SReportList',
+              component: SReportList
             },
-
+            {
+              path: 'reportlist/:ticket_id',
+              name: 'SReportDetail',
+              component: SReportDetail,
+              props: true, 
+            },
             {
               path: 'UsersListSUP',
-              name: 'AUsersListSUP',
-              component: AUsersListSUP,
+              name: 'SUsersListSUP',
+              component: SUsersListSUP,
             
             },
 
@@ -605,16 +616,21 @@ export default new Router({
         },
         {
           path: 'technician',
-          redirect: 'technician/dashboard',
+          redirect: 'technician/reportlist',
           name: 'MHome',
-          component: TheContainer,
+          component: TTheContainer,
           children: [
             {
-              path: 'dashboard',
-              name: 'Dashboard',
-              component: Dashboard
+              path: 'reportlist',
+              name: 'TReportList',
+              component: TReportList
             },
-
+             {
+              path: 'reportlist/:ticket_id',
+              name: 'TReportDetail',
+              component: TReportDetail,
+              props: true, 
+            },
           ]
         }
       ]

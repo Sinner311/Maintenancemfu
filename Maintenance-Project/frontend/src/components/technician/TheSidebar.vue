@@ -36,16 +36,9 @@ export default {
           {
             _name: 'CSidebarNavItem',
             name: 'งานซ่อม',
-            to: '/mockup/supervisor/reportlist',
+            to: '/mockup/technician/reportlist',
             icon: 'cil-window-restore'
-          },
-          {
-            _name: 'CSidebarNavItem',
-            name: 'จัดการข้อมูลพนักงานช่าง',
-            to: '/mockup/supervisor/UsersListSUP',
-            icon: 'cil-people'
-          },
-          
+          },      
         ]
       }]
     }

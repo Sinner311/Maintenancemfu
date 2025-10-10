@@ -14,8 +14,8 @@
     </template>
 
 
-    <CDropdownItem  to="/">
-      <CIcon name="cil-lock-locked" size="xl" /> Logout
+    <CDropdownItem to="/">
+      <CIcon name="cil-lock-locked" size="xl"/> Logout
     </CDropdownItem>
   </CDropdown>
 </template>

@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import TicketList from '../../components/admin/TicketList'
+import TicketList from '../../components/technician/TicketList'
 
 export default {
   name: 'Dashboard',

@@ -90,7 +90,7 @@
 <!--    <CDropdownItem>-->
 <!--      <CIcon name="cil-shield-alt" size="xl" /> Lock Account-->
 <!--    </CDropdownItem>-->
-    <CDropdownItem>
+    <CDropdownItem  to="/">
       <CIcon name="cil-lock-locked" size="xl" /> Logout
     </CDropdownItem>
   </CDropdown>
