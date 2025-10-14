@@ -32,7 +32,7 @@
 
             <template #actions="{ item }">
               <td class="text-center">
-                <CButton size="lg" color="primary" @click="openEditModal(item)">
+                <CButton size="lg" color="primary" shape="pill" @click="openEditModal(item)">
                   Edit
                 </CButton>
               </td>
