@@ -37,7 +37,7 @@
       </template>
 
       <!-- ปุ่มติดตาม -->
-      <template #show_details="{ item, index }">
+      <template #show_details="{ item , index }">
         <td class="text-center">
           <button
             class="btn btn-outline-primary btn-sm"
