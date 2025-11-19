@@ -5,19 +5,30 @@
       <CCol md="12">
         <CCard>
           <CCardHeader>
-            <h4 class="card-title mb-0">แจ้งซ่อม</h4>
+            <h4 class="card-title mb-0 px-auto d-flex justify-content-between align-items-center">
+              แจ้งซ่อม<CButton
+                size="xl"
+                color="success"
+                class="ml-5 px-5"
+                shape="pill"
+                @click="sendReportModal = true"
+              >
+                <div class="px-5 h5">แจ้งซ่อม</div>
+              </CButton>
+            </h4>
           </CCardHeader>
           <CCardBody>
+  
             <CTabs add-tab-classes="mt-1">
               <CTab>
                 <template slot="title">
-                  <CIcon name="cil-description"/> รายการแจ้งซ่อม
+                  <CIcon name="cil-description" /> รายการแจ้งซ่อม
                 </template>
                 <Ureportable />
               </CTab>
               <CTab active>
                 <template slot="title">
-                  <CIcon name="cil-book"/> ประวัติแจ้งซ่อม
+                  <CIcon name="cil-book" /> ประวัติแจ้งซ่อม
                 </template>
                 <Uhistorytable />
               </CTab>
@@ -26,45 +37,41 @@
         </CCard>
       </CCol>
     </CRow>
-
-    <button class="sticky-btn" @click="sendReportModal = true">
-       + แจ้งซ่อม 
-    </button>
     <SendReport v-model="sendReportModal" />
   </div>
 </template>
 
 <script>
-import Uhistorytable from '../../components/user/Uhistorytable.vue';
-import Ureportable from '../../components/user/Ureportable.vue';
-import Ureportbutton from '../../components/user/Ureportbutton.vue';
-import SendReport from '../../components/user/SendReport';
+import Uhistorytable from "../../components/user/Uhistorytable.vue";
+import Ureportable from "../../components/user/Ureportable.vue";
+import Ureportbutton from "../../components/user/Ureportbutton.vue";
+import SendReport from "../../components/user/SendReport";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
     Ureportable,
     Ureportbutton,
     Uhistorytable,
-    SendReport
+    SendReport,
   },
   data() {
     return {
-      selected: 'Month',
+      selected: "Month",
       sendReportModal: false,
-    }
+    };
   },
   methods: {
     color(value) {
-      let $color
-      if (value <= 25) $color = 'info'
-      else if (value > 25 && value <= 50) $color = 'success'
-      else if (value > 50 && value <= 75) $color = 'warning'
-      else if (value > 75 && value <= 100) $color = 'danger'
-      return $color
-    }
-  }
-}
+      let $color;
+      if (value <= 25) $color = "info";
+      else if (value > 25 && value <= 50) $color = "success";
+      else if (value > 50 && value <= 75) $color = "warning";
+      else if (value > 75 && value <= 100) $color = "danger";
+      return $color;
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -79,7 +86,7 @@ export default {
   border-radius: 20px;
   border: 2px solid #000000;
   padding: 18px 36px;
-  font-size: 20px;          
+  font-size: 20px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;

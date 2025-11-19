@@ -11,8 +11,8 @@
         <CInput
           label="เบอร์โทรผู้แจ้ง:"
           value="090-000-0000"
+          placeholder="กรุณาใส่เบอร์โทร"
           horizontal
-          plaintext
         />
         <template>
           <CRow form class="form-group">
@@ -44,23 +44,43 @@
           </CRow>
         </template>
         <template>
-          <CRow form class="form-group">
-            <CCol sm="3"> พื้นที่ปฏิบัติงาน: </CCol>
-            <CInputRadioGroup
-              :options="[
-                { label: 'ในอาคาร', value: 'ในอาคาร' },
-                { label: 'นอกอาคาร', value: 'นอกอาคาร' },
-              ]"
-              inline
-            />
-          </CRow>
-        </template>
-        <CSelect
-          label="อาคาร:"
-          horizontal
-          :options="options"
-          placeholder="Please select"
-        />
+  <CRow form class="form-group">
+    <CCol sm="3"> พื้นที่ปฏิบัติงาน: </CCol>
+    <CCol sm="9" class="d-flex align-items-center">
+      
+      <label class="c-radio-inline mr-3">
+        <input type="radio" value="indoor" v-model="workingArea" />
+        ในอาคาร
+      </label>
+
+      <label class="c-radio-inline">
+        <input type="radio" value="outdoor" v-model="workingArea" />
+        นอกอาคาร
+      </label>
+      
+    </CCol>
+  </CRow>
+
+  <template v-if="workingArea === 'indoor'">
+    <CRow form class="form-group">
+      <CCol sm="3"> อาคาร: </CCol>
+      <CCol sm="9">
+        <CSelect :options="options" placeholder="Please select" />
+      </CCol>
+    </CRow>
+  </template>
+
+  <template v-else-if="workingArea === 'outdoor'">
+  <CRow form class="form-group">
+    <CCol sm="3" />
+    <CCol sm="9">
+      <GoogleMapsPicker v-model="outdoorLocation" /> 
+      <small class="form-text text-muted">กรุณาปักหมุดตำแหน่งที่ตั้ง</small>
+    </CCol>
+  </CRow>
+</template>
+  
+  </template>
       </CForm>
     </CModalBody>
     <template #footer>
@@ -79,25 +99,24 @@ import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 import Quill from "vue-quill-editor";
-import { container, ImageExtend, QuillWatch } from "quill-image-extend-module";
+import GoogleMapsPicker from './UGoogleMapsPicker.vue'
 
 Vue.use(Quill);
-
-const testImageAPI = "https://github.surmon.me/images/";
-const testImageUrl = testImageAPI + "background.jpg";
-
 
 export default {
   name: "Forms",
   components: {
     Multiselect,
     Quill,
+    GoogleMapsPicker,
   },
   props: {
     value: { type: Boolean, default: false }, // รับค่าจาก v-model
   },
   data() {
     return {
+      workingArea: "",
+      outdoorLocation: {},
       localModal: this.value, // ใช้ภายใน component
       steps: ["รับเรื่องแล้ว", "รอดำเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น"],
       currentStep: 3,
@@ -144,7 +163,7 @@ export default {
             container: [["link", "image", "video"]],
           },
         },
-        placeholder: 'เขียนปัญหาที่พบพร้อมแนบไฟล์รูปที่เกี่ยวข้อง...',
+        placeholder: "เขียนปัญหาที่พบพร้อมแนบไฟล์รูปที่เกี่ยวข้อง...",
       },
     };
   },

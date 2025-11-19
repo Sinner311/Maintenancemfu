@@ -30,9 +30,9 @@
         style="height: 400px"
         @click='addMarker'
       >
-<!--        <GmapInfoWindow :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">-->
-<!--          <CLink :href="infoLink" target="_blank">{{infoContent}}</CLink>-->
-<!--        </GmapInfoWindow>-->
+       <GmapInfoWindow :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
+         <CLink :href="infoLink" target="_blank">{{infoContent}}</CLink>
+       </GmapInfoWindow>
         <GmapMarker
           :key="index"
           v-for="(m, index) in markers"
