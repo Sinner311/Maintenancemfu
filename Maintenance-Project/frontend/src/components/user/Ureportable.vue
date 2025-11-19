@@ -3,12 +3,10 @@
     <CDataTable
       :items="ticketsData"
       :fields="fields"
-      column-filter
       table-filter
       items-per-page-select
       :items-per-page="5"
       hover
-      sorter
       pagination
     >
       <!-- วันที่ -->

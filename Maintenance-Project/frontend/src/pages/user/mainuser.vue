@@ -5,20 +5,24 @@
       <CCol md="12">
         <CCard>
           <CCardHeader>
-            <h4 class="card-title mb-0">รายการแจ้งซ่อมของฉัน</h4>
+            <h4 class="card-title mb-0">แจ้งซ่อม</h4>
           </CCardHeader>
-          <Ureportable />
-        </CCard>
-      </CCol>
-    </CRow>
-
-    <CRow>
-      <CCol md="12">
-        <CCard>
-          <CCardHeader>
-            <h4 class="card-title mb-0">ประวัติแจ้งซ่อมของฉัน</h4>
-          </CCardHeader>
-          <Uhistorytable />
+          <CCardBody>
+            <CTabs add-tab-classes="mt-1">
+              <CTab>
+                <template slot="title">
+                  <CIcon name="cil-description"/> รายการแจ้งซ่อม
+                </template>
+                <Ureportable />
+              </CTab>
+              <CTab active>
+                <template slot="title">
+                  <CIcon name="cil-book"/> ประวัติแจ้งซ่อม
+                </template>
+                <Uhistorytable />
+              </CTab>
+            </CTabs>
+          </CCardBody>
         </CCard>
       </CCol>
     </CRow>
