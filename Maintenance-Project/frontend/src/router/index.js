@@ -98,14 +98,15 @@ const AJobTypeManagement = () => import('@/pages/admin/JobTypeManagement')
 const AUsersList = () => import('@/pages/admin/UsersList')
 //User
 const Userhomepage = () => import('@/pages/user/mainuser')
-const Ucontainer =() => import('@/components/user/Ucontainer')
+const Ucontainer = () => import('@/components/user/Ucontainer')
 
 
 //Supervisor
 const STheContainer = () => import('@/components/supervisor/TheContainer')
-const SUsersListSUP = () => import('@/pages/supervisor/UsersListSUP')
+const SUsersList = () => import('@/pages/supervisor/UsersListSUP')
 const SReportList = () => import('@/pages/supervisor/ReportList')
 const SReportDetail = () => import('@/pages/supervisor/ReportDetail')
+const SJobTypeManagement = () => import('@/pages/supervisor/JobTypeManagement')
 Vue.use(Router)
 //Technician
 const TReportDetail = () => import('@/pages/technician/ReportDetail')
@@ -565,26 +566,26 @@ export default new Router({
               path: 'reportlist/:ticket_id',
               name: 'AReportDetail',
               component: AReportDetail,
-              props: true, 
+              props: true,
             },
             {
               path: 'job-type',
               name: 'AJobTypeManagement',
               component: AJobTypeManagement,
-              props: true,  
+              props: true,
             },
             {
               path: 'building',
               name: 'ABuildingManagement',
               component: ABuildingManagement,
-              props: true,  
+              props: true,
             },
-            
+
             {
               path: 'UsersList',
               name: 'AUsersList',
               component: AUsersList,
-            
+
             },
           ]
         },
@@ -603,15 +604,20 @@ export default new Router({
               path: 'reportlist/:ticket_id',
               name: 'SReportDetail',
               component: SReportDetail,
-              props: true, 
+              props: true,
             },
             {
-              path: 'UsersListSUP',
-              name: 'SUsersListSUP',
-              component: SUsersListSUP,
-            
-            },
+              path: 'UsersList',
+              name: 'SUsersList',
+              component: SUsersList,
 
+            },
+            {
+              path: 'job-type',
+              name: 'SJobTypeManagement',
+              component: SJobTypeManagement,
+              props: true,
+            },
           ]
         },
         {
@@ -625,11 +631,11 @@ export default new Router({
               name: 'TReportList',
               component: TReportList
             },
-             {
+            {
               path: 'reportlist/:ticket_id',
               name: 'TReportDetail',
               component: TReportDetail,
-              props: true, 
+              props: true,
             },
           ]
         }
