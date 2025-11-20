@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import JobList from '../../components/admin/JobList'
+import JobList from '../../components/supervisor/JobList'
 
 export default {
   name: 'Dashboard',

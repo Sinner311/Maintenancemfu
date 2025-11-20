@@ -41,10 +41,16 @@ export default {
           },
           {
             _name: 'CSidebarNavItem',
-            name: 'จัดการข้อมูลพนักงานช่าง',
-            to: '/mockup/supervisor/UsersListSUP',
+            name: 'จัดการข้อมูล เจ้าหน้าที่',
+            to: '/mockup/supervisor/UsersList',
             icon: 'cil-people'
           },
+          {
+            _name: 'CSidebarNavItem',
+            name: 'จัดการข้อมูล ประเภทงาน',
+            to: '/mockup/supervisor/job-type',
+            icon: 'cil-briefcase'
+          }
           
         ]
       }]

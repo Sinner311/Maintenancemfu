@@ -155,7 +155,7 @@ export default {
       categoriesData,
       fields: [
         { key: "departmentName", label: "ชื่อหน่วยงาน", _style: "width:20%" },
-        { key: "subCategories", label: "ประเภทงาน", _style: "width:70%" },
+        { key: "subCategories", label: "ข้อมูลประเภทงาน", _style: "width:70%" },
         {
           key: "show_details",
           label: "",
