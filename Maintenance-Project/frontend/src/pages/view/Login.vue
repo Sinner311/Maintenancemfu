@@ -191,7 +191,7 @@ export default {
 .btn-google-premium {
   width: 100%;
   height: 56px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #fd0000 0%, #2563eb 100%);
   border: none;
   border-radius: 10px;
   cursor: pointer;
