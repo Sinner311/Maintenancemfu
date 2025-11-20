@@ -61,7 +61,7 @@
                   </ul>
 
                   <div class="copyright-text text-center mt-4 pt-3 border-top">
-                    <small>© 2025 Mae Fah Luang University.<br>Center for Information Technology Services.</small>
+                    <small>© 2025 ลิขสิทธิ์โดยศูนย์บริการเทคโนโลยีสารสนเทศ มหาวิทยาลัยแม่ฟ้าหลวง สงวนลิขสิทธิ์ทั้งหมด<br>© 2025 Center for Information Technology Services, Mae Fah Luang University. All rights reserved. </small>
                   </div>
                 </div>
 

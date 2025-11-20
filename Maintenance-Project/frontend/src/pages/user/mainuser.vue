@@ -4,8 +4,8 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader>
-            <h4 class="card-title mb-0 d-flex justify-content-between align-items-center">
+          <CCardHeader class="bg-primary border-bottom">
+            <h4 class="card-title mb-0 d-flex justify-content-between align-items-center text-white">
               แจ้งซ่อม
               <button class="report-btn" @click="sendReportModal = true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
