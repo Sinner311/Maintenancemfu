@@ -35,15 +35,15 @@
 
       <!-- ปุ่มติดตาม -->
       <template #show_details="{ item, index }">
-        <td class="text-center">
-          <button
-            class="btn btn-outline-primary btn-sm"
-            @click="toggleDetails(index)"
-          >
-            ติดตาม
-          </button>
-        </td>
-      </template>
+  <td class="text-center">
+    <button
+      class="btn btn-outline-primary btn-sm"
+      @click="showDetail(item)"
+    >
+      ติดตาม
+    </button>
+  </td>
+</template>
 
       <!-- รายละเอียดเพิ่มเติม -->
       <template #details="{ item, index }">
@@ -206,6 +206,9 @@ export default {
     };
   },
   methods: {
+    showDetail(item) {
+    this.$emit('show-detail', item);
+  },
     toggleDetails(index) {
       const position = this.details.indexOf(index);
       position !== -1

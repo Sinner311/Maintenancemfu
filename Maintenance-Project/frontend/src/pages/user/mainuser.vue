@@ -5,18 +5,20 @@
       <CCol md="12">
         <CCard>
           <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
-            <h4 class="card-title mb-0 text-white"><CIcon name="cil-window-restore" size="xl"/>  แจ้งซ่อม</h4>
-              <button class="report-btn" @click="sendReportModal = true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                  <polyline points="14 2 14 8 20 8"/>
-                  <line x1="12" y1="18" x2="12" y2="12"/>
-                  <line x1="9" y1="15" x2="15" y2="15"/>
-                </svg>
-                <span>แจ้งซ่อม</span>
-              </button>
-            
+            <h4 class="card-title mb-0 text-white">
+              <CIcon name="cil-window-restore" size="xl"/> แจ้งซ่อม
+            </h4>
+            <button class="report-btn" @click="sendReportModal = true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="12" y1="18" x2="12" y2="12"/>
+                <line x1="9" y1="15" x2="15" y2="15"/>
+              </svg>
+              <span>แจ้งซ่อม</span>
+            </button>
           </CCardHeader>
+          
           <CCardBody>
             <!-- Custom Tabs -->
             <div class="custom-tabs">
@@ -42,20 +44,130 @@
                   <span style="font-size: 15px; font-weight: 500;">ประวัติแจ้งซ่อม</span>
                 </button>
               </div>
+              
               <div class="tabs-content">
                 <div v-show="activeTab === 'report'" class="tab-panel">
-                  <Ureportable />
+                  <Ureportable @show-detail="handleShowDetail" />
                 </div>
                 <div v-show="activeTab === 'history'" class="tab-panel">
-                  <Uhistorytable />
+                  <Uhistorytable @show-detail="handleShowDetail" />
                 </div>
               </div>
             </div>
           </CCardBody>
         </CCard>
-        <UReportDetail />
+
+        <!-- Report Detail Card - แสดงเมื่อมีการเลือก -->
+        <CCard v-if="selectedReport" class="mt-4">
+          <CCardHeader style="background-color: #8c1007" class="border-bottom d-flex justify-content-between align-items-center">
+            <h4 class="text-white card-title mb-0">
+              <CIcon name="cil-description" size="xl" /> รายละเอียดใบแจ้งซ่อม
+            </h4>
+            <CButton color="light" size="sm" @click="closeDetail">
+              <CIcon name="cil-x" />
+            </CButton>
+          </CCardHeader>
+          
+          <CCardBody class="p-4">
+            <!-- Timeline Work Order -->
+            <div class="work-order-timeline">
+              <div class="timeline-line" :style="getTimelineStyle()"></div>
+              
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 1 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 1 ? 'รับเรื่องแล้ว' : 'N/A' }}</div>
+                  <div class="step-role">User/ผู้แจ้ง</div>
+                </div>
+              </div>
+
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 2 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 2 ? 'รับงานแล้ว' : 'N/A' }}</div>
+                  <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
+                </div>
+              </div>
+
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 3 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 3 ? 'กำลังดำเนินการ' : 'N/A' }}</div>
+                  <div class="step-role">Technician/ช่างซ่อม</div>
+                </div>
+              </div>
+
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 4 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 4 ? 'เสร็จสิ้น' : 'N/A' }}</div>
+                  <div class="step-role">เสร็จสิ้น</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- รายละเอียด -->
+            <CForm class="mx-5 my-2">
+              <!-- ส่วนของผู้ขอใช้ใบงาน -->
+              <div class="d-flex align-items-center mb-4">
+                <div class="icon-box mr-3" style="background-color: #fff0c4">
+                  <span style="font-size: 1.5rem">🛠️</span>
+                </div>
+                <div>
+                  <h5 class="m-0 font-weight-bold">ส่วนของผู้ขอใช้ใบงาน</h5>
+                  <small class="text-muted">รายละเอียดผู้แจ้ง ปัญหาและสถานที่</small>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <CRow>
+                  <CCol sm="4">
+                    <label class="lbl">วันที่/เวลา แจ้ง:</label>
+                    <CInput :value="`${selectedReport.reported_at_date} ${selectedReport.reported_at_time} น.`" plaintext readonly />
+                  </CCol>
+                  <CCol sm="4">
+                    <label class="lbl">ชื่อผู้แจ้ง:</label>
+                    <CInput :value="selectedReport.username" plaintext readonly />
+                  </CCol>
+                  <CCol sm="4">
+                    <label class="lbl">เลขที่แจ้งซ่อม:</label>
+                    <CInput :value="selectedReport.ticket_number" plaintext readonly />
+                  </CCol>
+                </CRow>
+                <CRow class="mt-3">
+                  <CCol sm="6">
+                    <label class="lbl">ประเภทงาน:</label>
+                    <CInput :value="selectedReport.category" plaintext readonly />
+                  </CCol>
+                  <CCol sm="6">
+                    <label class="lbl">สถานะ:</label>
+                    <CBadge :color="getBadge(selectedReport.status)" style="font-size: 14px; padding: 6px 12px;">
+                      {{ selectedReport.status }}
+                    </CBadge>
+                  </CCol>
+                </CRow>
+                <CRow class="mt-3">
+                  <CCol>
+                    <label class="lbl">รายละเอียดปัญหา:</label>
+                    <CInput :value="selectedReport.issue_detail" plaintext readonly />
+                  </CCol>
+                </CRow>
+              </div>
+
+              <hr class="my-4 border-dashed" />
+
+              <!-- ปุ่มกลับ -->
+              <div class="text-center">
+                <CButton color="secondary" @click="closeDetail" size="lg">
+                  ปิดรายละเอียด
+                </CButton>
+              </div>
+            </CForm>
+          </CCardBody>
+        </CCard>
       </CCol>
     </CRow>
+    
     <SendReport v-model="sendReportModal" />
   </div>
 </template>
@@ -63,35 +175,79 @@
 <script>
 import Uhistorytable from "../../components/user/Uhistorytable.vue";
 import Ureportable from "../../components/user/Ureportable.vue";
-import Ureportbutton from "../../components/user/Ureportbutton.vue";
 import SendReport from "../../components/user/SendReport";
-import UReportDetail from "../../components/user/UReportDetail";
-
 
 export default {
   name: "Dashboard",
   components: {
     Ureportable,
-    Ureportbutton,
     Uhistorytable,
     SendReport,
-    UReportDetail,
   },
   data() {
     return {
-      selected: "Month",
       sendReportModal: false,
-      activeTab: "report", // เริ่มต้นที่ประวัติแจ้งซ่อม
+      activeTab: "report",
+      selectedReport: null, // เก็บข้อมูลรายการที่เลือก
     };
   },
   methods: {
-    color(value) {
-      let $color;
-      if (value <= 25) $color = "info";
-      else if (value > 25 && value <= 50) $color = "success";
-      else if (value > 50 && value <= 75) $color = "warning";
-      else if (value > 75 && value <= 100) $color = "danger";
-      return $color;
+    handleShowDetail(item) {
+      // กำหนด currentStep ตามสถานะ
+      let currentStep = 1;
+      switch(item.status) {
+        case 'รอดำเนินการ':
+          currentStep = 1;
+          break;
+        case 'รับเรื่องแล้ว':
+          currentStep = 2;
+          break;
+        case 'กำลังดำเนินการ':
+          currentStep = 3;
+          break;
+        case 'เสร็จสิ้น':
+          currentStep = 4;
+          break;
+      }
+      
+      this.selectedReport = {
+        ...item,
+        currentStep
+      };
+      
+      // Scroll to detail
+      this.$nextTick(() => {
+        const detailCard = document.querySelector('.mt-4');
+        if (detailCard) {
+          detailCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    },
+    
+    closeDetail() {
+      this.selectedReport = null;
+    },
+    
+    getTimelineStyle() {
+      const progress = ((this.selectedReport.currentStep - 1) / 3) * 100;
+      return {
+        background: `linear-gradient(to right, #007bff ${progress}%, #e0e0e0 ${progress}%)`
+      };
+    },
+    
+    getBadge(status) {
+      switch (status) {
+        case "กำลังดำเนินการ":
+          return "success";
+        case "เสร็จสิ้น":
+          return "secondary";
+        case "รับเรื่องแล้ว":
+          return "warning";
+        case "รอดำเนินการ":
+          return "danger";
+        default:
+          return "primary";
+      }
     },
   },
 };
@@ -141,7 +297,6 @@ export default {
   }
 }
 
-/* Custom Tabs Styling */
 .custom-tabs {
   margin-top: 20px;
 }
@@ -161,8 +316,6 @@ export default {
   border: none;
   background: transparent;
   color: #6c757d;
-  font-size: 15px;
-  font-weight: 500;
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all 0.3s ease;
@@ -170,55 +323,108 @@ export default {
   bottom: -2px;
 }
 
-.tab-item svg {
-  transition: all 0.3s ease;
-}
-
 .tab-item:hover {
   color: #495057;
   background: #f8f9fa;
-}
-
-.tab-item:hover svg {
-  transform: translateY(-2px);
 }
 
 .tab-item.active {
   color: #cd1212;
   font-weight: 600;
   border-bottom-color: #cd1212;
-  background: linear-gradient(to bottom, rgba(0, 123, 255, 0.05), transparent);
 }
 
-.tab-item.active svg {
-  color: #cd1212;
+.lbl {
+  font-weight: 600;
+  color: #495057;
+  display: block;
+  margin-bottom: 4px;
 }
 
-.tabs-content {
-  animation: fadeIn 0.3s ease;
+.icon-box {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
 }
 
-.tab-panel {
-  animation: slideIn 0.3s ease;
+/* Timeline Styles */
+.work-order-timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px 20px;
+  margin: 30px 0;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 3px;
+  z-index: 0;
+  transition: background 0.3s ease;
+}
+
+.timeline-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  z-index: 1;
+}
+
+.step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.timeline-step.active .step-circle {
+  background: #007bff;
+  border-color: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.step-label {
+  text-align: center;
+  max-width: 120px;
+}
+
+.step-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.timeline-step.active .step-status {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.step-role {
+  font-size: 11px;
+  color: #6c757d;
+  line-height: 1.3;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(10px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+.mt-4 {
+  animation: fadeIn 0.3s ease;
 }
 </style>
