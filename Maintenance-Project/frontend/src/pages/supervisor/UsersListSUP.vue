@@ -2,8 +2,9 @@
   <CCard class="shadow-sm rounded-3 bg-white">
     <CRow>
       <CCol>
-        <CCardHeader class="bg-white border-bottom">
-          <h4 class="card-title mb-0">จัดการข้อมูลพนักงานช่าง</h4>
+        <CCardHeader class="bg-primary border-bottom d-flex justify-content-between align-items-center">
+          <h4 class="card-title mb-0 text-white"><CIcon name="cil-user" size="xl"/> จัดการข้อมูลพนักงานช่าง</h4>
+          <CButton color="success" shape="pill">เพิ่มเจ้าหน้าที่</CButton>
         </CCardHeader>
 
         <CCardBody>
@@ -15,24 +16,16 @@
             sorter
             pagination
             :items-per-page="5"
-            column-filter
             table-filter
             items-per-page-select
           >
-            <template #user_info="{ item }">
-              <td>
-                <div><strong>{{ item.username }}</strong> | {{ item.role }}</div>
-                <div class="small text-muted">{{ item.email }} | {{ item.phone }}</div>
-              </td>
-            </template>
-
             <template #category="{ item }">
               <td>{{ item.category || '—' }}</td>
             </template>
 
             <template #actions="{ item }">
               <td class="text-center">
-                <CButton size="lg" color="primary" shape="pill" @click="openEditModal(item)">
+                <CButton size="sm" color="primary" shape="pill" @click="openEditModal(item)"> 
                   Edit
                 </CButton>
               </td>
@@ -42,7 +35,6 @@
       </CCol>
     </CRow>
 
-    <!-- Modal -->
     <CModal title="Edit User" :show.sync="showModal" size="lg" color="warning" centered>
       <CModalBody v-if="editUser">
         <CForm>
@@ -84,8 +76,11 @@
 </template>
 
 <script>
+  import { CIcon } from '@coreui/icons-vue';
+  import * as icon from '@coreui/icons';
 export default {
   name: 'UsersList',
+  components: { CIcon }, // Explicitly register CIcon if not already global
   data() {
     return {
       showModal: false,
@@ -103,10 +98,14 @@ export default {
         { id: 10, username: 'Tawan Phanuphong', email: 'PT00000010@mfu.ac.th', phone: '0998765432', role: 'Technician', category: 'ระบบไฟฟ้า' },
       ],
       tableFields: [
-        { key: 'user_info', label: 'User Info', _style: 'width:50%' },
-        { key: 'role', label: 'Role', _style: 'width:15%' },
-        { key: 'category', label: 'Category', _style: 'width:15%' },
-        { key: 'actions', label: 'Actions', _style: 'width:20%', sorter: false, filter: false, _classes: 'text-center' },
+        // New fields for separating User Info
+        { key: 'username', label: 'Name', _style: 'width:15%', sorter: true },
+        { key: 'email', label: 'Email', _style: 'width:20%', sorter: true },
+        { key: 'phone', label: 'Phone', label: 'Phone', _style: 'width:15%', sorter: true },
+        // Existing fields
+        { key: 'role', label: 'Role', _style: 'width:10%', sorter: true },
+        { key: 'category', label: 'Category', _style: 'width:15%', sorter: true },
+        { key: 'actions', label: 'Actions', _style: 'width:10%', sorter: false, filter: false, _classes: 'text-center' },
       ],
       roleOptions: [
         { value: 'Technician', label: 'Technician' },
@@ -117,11 +116,10 @@ export default {
     }
   },
   computed: {
+    // The tableUsers computed property is no longer strictly necessary 
+    // for this change, but we'll simplify it back to just the users array.
     tableUsers() {
-      return this.users.map(u => ({
-        ...u,
-        user_info: `${u.username} ${u.email} ${u.phone}`
-      }))
+      return this.users;
     }
   },
   methods: {
