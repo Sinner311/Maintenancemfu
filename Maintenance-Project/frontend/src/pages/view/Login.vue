@@ -154,13 +154,13 @@ export default {
     #b31b1b 10px,
     #b31b1b 20px
   );
-  background-size: 40px 100%; /* ขนาดของ pattern */
-  animation: stripe-flow 1.5s linear infinite; /* Animation ที่ทำให้เลื่อน */
+  background-size: 40px 100%; 
+  animation: stripe-flow 1.5s linear infinite; 
 }
 
 @keyframes stripe-flow {
   from { background-position: 0 0; }
-  to { background-position: 40px 0; } /* เลื่อนไป 40px (เท่ากับ background-size) */
+  to { background-position: 40px 0; } 
 }
 /* --- End Animated Stripe --- */
 
