@@ -27,7 +27,6 @@
               <CCardBody class="p-5 text-center position-relative z-index-1">
                 
                 <div class="mb-4 logo-wrapper">
-            
                   <div class="d-flex justify-content-center align-items-center mb-3">
                     <img src="@/assets/logo.svg" height="100" class="logo-shadow" alt="MFU Logo" />
                   </div>
@@ -36,12 +35,20 @@
                   <h2 class="brand-subtitle">มหาวิทยาลัยแม่ฟ้าหลวง</h2>
                 </div>
 
-                <div class="my-5">
-                  <button class="btn-google-premium" @click="handleLogin">
+                <div class="my-4">
+                  <button class="btn-google-premium mb-2" @click="handleLogin">
                     <div class="icon-box">
                       <span class="google-g">G</span>
                     </div>
                     <span class="btn-text">LOGIN เข้าใช้งานระบบ</span>
+                  </button>
+
+                  <small class="d-block mb-3 font-weight-bold" style="font-size: 0.85rem; color: #dc3545;">
+                    * โปรดใช้ <strong>Lamduan mail</strong> ในการ login
+                  </small>
+
+                  <button class="btn-manual" @click="openManual">
+                    <CIcon name="cil-book" size="sm" class="mr-2"/> คู่มือการใช้งาน
                   </button>
                 </div>
 
@@ -57,7 +64,6 @@
                     <li><CIcon name="cil-phone" class="mr-2 icon-red"/> 0-5391-6411</li>
                     <li><CIcon name="cil-envelope-closed" class="mr-2 icon-red"/> cits@mfu.ac.th</li>
                     <li>Facebook : CITS MFU</li>
-
                   </ul>
 
                   <div class="copyright-text text-center mt-4 pt-3 border-top">
@@ -82,6 +88,9 @@ export default {
   methods: {
     handleLogin() {
       this.$router.push('/dashboard'); 
+    },
+    openManual() {
+      // ยังไม่ทำอะไร (ว่างไว้)
     }
   }
 };
@@ -162,35 +171,23 @@ export default {
   from { background-position: 0 0; }
   to { background-position: 40px 0; } 
 }
-/* --- End Animated Stripe --- */
 
 
 /* --- 3. Branding & Repair Badge --- */
-.repair-badge {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #b31b1b, #800000);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(179, 27, 27, 0.3);
-  border: 3px solid #fff;
-}
-
 .brand-title {
   color: #800000;
   font-weight: 800;
   margin-bottom: 0;
+  font-size: 1.75rem;
 }
 .brand-subtitle {
   color: #555;
   font-weight: 800;
   margin-bottom: 0;
+  font-size: 1.1rem;
 }
 
-/* --- 4. Google Button --- */
+/* --- 4. Buttons --- */
 .btn-google-premium {
   width: 100%;
   height: 56px;
@@ -207,6 +204,28 @@ export default {
 .btn-google-premium:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* ปุ่มคู่มือ (ปุ่มรอง) */
+.btn-manual {
+  background: transparent;
+  border: 1px solid #e0e0e0;
+  color: #757575;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+.btn-manual:hover {
+  background-color: #f5f5f5;
+  border-color: #b31b1b;
+  color: #b31b1b;
+}
+.btn-manual:active {
+  transform: translateY(1px);
 }
 
 .icon-box {
