@@ -2,7 +2,7 @@
   <CCard class="shadow-sm rounded-3 bg-white">
     <CRow>
       <CCol>
-        <CCardHeader class="bg-primary border-bottom d-flex justify-content-between align-items-center">
+        <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
           <h4 class="card-title mb-0 text-white"><CIcon name="cil-people" size="xl"/> จัดการข้อมูลพนักงานช่าง</h4>
           <CButton color="success" shape="pill">เพิ่มเจ้าหน้าที่</CButton>
         </CCardHeader>

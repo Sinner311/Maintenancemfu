@@ -30,7 +30,6 @@
 
 <script>
 import UheaderDropdownAccnt from './UheaderDropdownAccnt'
-import UheaderDropdownNotif from './UheaderDropdownNotif'
 
 import {mapGetters} from "vuex";
 
@@ -38,7 +37,6 @@ export default {
   name: 'TheHeader',
   components: {
     UheaderDropdownAccnt,
-    UheaderDropdownNotif
   },
 }
 </script>

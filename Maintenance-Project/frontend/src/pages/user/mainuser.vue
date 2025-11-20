@@ -4,7 +4,7 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader class="bg-primary border-bottom">
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
             <h4 class="card-title mb-0 d-flex justify-content-between align-items-center text-white">
               แจ้งซ่อม
               <button class="report-btn" @click="sendReportModal = true">

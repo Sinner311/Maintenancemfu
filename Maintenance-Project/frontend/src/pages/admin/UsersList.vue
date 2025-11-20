@@ -2,7 +2,7 @@
   <CCard class=" shadow-sm rounded-3 bg-white">
     <CRow class="">
       <CCol md="">
-          <CCardHeader class="bg-primary border-bottom">
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
             <h4 class="text-white card-title mb-0"><CIcon name="cil-people" size="xl"/> จัดการข้อมูลเจ้าหน้าที่</h4>
           </CCardHeader>
 

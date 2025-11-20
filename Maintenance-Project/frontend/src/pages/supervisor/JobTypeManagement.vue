@@ -3,8 +3,8 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader>
-            <h4 class="card-title mb-0">จัดการข้อมูล ประเภทงาน</h4>
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
+            <h4 class="text-white card-title mb-0"><CIcon name="cil-book" size="xl"/> จัดการข้อมูล ประเภทงาน</h4>
           </CCardHeader>
           <JobList/>
         </CCard>

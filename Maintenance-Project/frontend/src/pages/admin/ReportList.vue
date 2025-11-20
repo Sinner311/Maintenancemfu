@@ -3,7 +3,7 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader class="bg-primary border-bottom">
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom" >
             <h4 class="text-white card-title mb-0"><CIcon name="cil-window-restore" size="xl"/> งานซ่อม</h4>
           </CCardHeader>
           <TicketList/>
