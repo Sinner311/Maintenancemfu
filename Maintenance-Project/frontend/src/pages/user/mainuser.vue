@@ -5,20 +5,20 @@
       <CCol md="12">
         <CCard>
           <CCardHeader>
-            <h4 class="card-title mb-0 px-auto d-flex justify-content-between align-items-center">
-              แจ้งซ่อม<CButton
-                size="xl"
-                color="success"
-                class="ml-5 px-5"
-                shape="pill"
-                @click="sendReportModal = true"
-              >
-                <div class="px-5 h5">แจ้งซ่อม</div>
-              </CButton>
+            <h4 class="card-title mb-0 d-flex justify-content-between align-items-center">
+              แจ้งซ่อม
+              <button class="report-btn" @click="sendReportModal = true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="12" y1="18" x2="12" y2="12"/>
+                  <line x1="9" y1="15" x2="15" y2="15"/>
+                </svg>
+                <span>แจ้งซ่อม</span>
+              </button>
             </h4>
           </CCardHeader>
           <CCardBody>
-  
             <CTabs add-tab-classes="mt-1">
               <CTab>
                 <template slot="title">
@@ -75,29 +75,46 @@ export default {
 </script>
 
 <style scoped>
-/* Sticky Button*/
-.sticky-btn {
-  position: fixed;
-  bottom: 35px;
-  right: 35px;
-  background-color: #2eb85c;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  border: 2px solid #000000;
-  padding: 18px 36px;
-  font-size: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  z-index: 999;
+.report-btn {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.sticky-btn:hover {
-  background-color: #24994a;
-  transform: translateY(-3px);
+.report-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+  animation: none;
+}
+
+.report-btn:active {
+  transform: translateY(0);
+}
+
+.report-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 6px 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(16, 185, 129, 0.5);
+    transform: scale(1.05);
+  }
 }
 </style>

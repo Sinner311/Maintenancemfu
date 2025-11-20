@@ -1,6 +1,5 @@
 <template>
   <CCardBody>
-    
     <CDataTable
       :items="ticketsData"
       :fields="fields"
@@ -10,18 +9,23 @@
       hover
       pagination
     >
-    <template #reported_datetime="{ item }">
+      <!-- วันที่ -->
+      <template #reported_datetime="{ item }">
         <td>
           <div>{{ item.reported_at_time }} น.</div>
           <div class="small">{{ item.reported_at_date }}</div>
         </td>
       </template>
+
+      <!-- รายละเอียด -->
       <template #issue_user="{ item }">
         <td>
           <div>{{ item.category }} | {{ item.issue_detail }}</div>
           <div class="small text-muted">ผู้แจ้ง: {{ item.username }}</div>
         </td>
       </template>
+
+      <!-- สถานะ -->
       <template #status="{ item }">
         <td>
           <CBadge :color="getBadge(item.status)">
@@ -29,33 +33,118 @@
           </CBadge>
         </td>
       </template>
-      <template #show_details="{ item, index }">
-        <td class="py-2">
-<CButton
-  color="primary"
-  variant="outline"
-  square
-  size="sm"
-  @click="toggleDetails(item, index)"
->
-  +
-</CButton>
 
+      <!-- ปุ่มติดตาม -->
+      <template #show_details="{ item , index }">
+        <td class="text-center">
+          <button
+            class="btn btn-outline-primary btn-sm"
+            @click="toggleDetails(index)"
+          >
+            ติดตาม
+          </button>
         </td>
       </template>
-      <template #details="{ item }">
-        <CCollapse :show="Boolean(item._toggled)" :duration="collapseDuration">
-          <CCardBody>
-            <CMedia :aside-image-props="{ height: 102 }">
-              <h4>
-                {{ item.username }}
-              </h4>
-              <p class="text-muted">User since: {{ item.reported_at }}</p>
-              <CButton size="sm" color="info" class=""> User Settings </CButton>
-              <CButton size="sm" color="danger" class="ml-1"> Delete </CButton>
-            </CMedia>
-          </CCardBody>
-        </CCollapse>
+
+      <!-- รายละเอียดเพิ่มเติม -->
+      <template #details="{ item, index }">
+        <tr v-if="details.includes(index)">
+          <td colspan="5" class="p-0">
+            <CCollapse :show="details.includes(index)">
+              <div class="p-4 bg-light">
+                
+                <!-- Header Section -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                  <h5 class="mb-0 fw-bold">ใบแจ้งซ่อม / ใบงาน (WORK ORDER)</h5>
+                  <div class="badge bg-primary text-white px-3 py-2" style="font-size: 14px;">
+                    หมายเลขในงาน<br>{{ item.ticket_number }}
+                  </div>
+                </div>
+
+                <!-- รายละเอียดการแจ้งซ่อม -->
+                <div class="mb-4 p-3 bg-white rounded border">
+                  <h6 class="fw-bold mb-3 text-primary">
+                    <i class="cil-clipboard me-2"></i>รายละเอียดการแจ้งซ่อม
+                  </h6>
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">Ticket ID:</span>
+                      <strong class="ms-2">{{ item.id + 1 }}</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">เลขที่แจ้งซ่อม:</span>
+                      <strong class="ms-2">{{ item.ticket_number }}</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">ประเภท:</span>
+                      <strong class="ms-2">{{ item.category }}</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">ผู้แจ้ง:</span>
+                      <strong class="ms-2">{{ item.username }}</strong>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <span class="text-muted">รายละเอียด:</span>
+                      <strong class="ms-2">{{ item.issue_detail }}</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">วันที่แจ้ง:</span>
+                      <strong class="ms-2">{{ item.reported_at_date }} {{ item.reported_at_time }} น.</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">สถานะ:</span>
+                      <CBadge :color="getBadge(item.status)" class="ms-2">
+                        {{ item.status }}
+                      </CBadge>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Timeline Work Order (แนวนอน) - สถานะเสร็จสิ้นทั้งหมด -->
+                <div class="work-order-timeline">
+                  <div class="timeline-line completed"></div>
+                  
+                  <!-- Step 1: User/ผู้แจ้ง -->
+                  <div class="timeline-step completed">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">เสร็จสิ้น</div>
+                      <div class="step-role">User/ผู้แจ้ง</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 2: Supervisor/ผู้รับเรื่อง -->
+                  <div class="timeline-step completed">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">เสร็จสิ้น</div>
+                      <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 3: Technician/ช่างซ่อม -->
+                  <div class="timeline-step completed">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">เสร็จสิ้น</div>
+                      <div class="step-role">Technician/ช่างซ่อม</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 4: เสร็จสิ้น -->
+                  <div class="timeline-step completed">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">เสร็จสิ้น</div>
+                      <div class="step-role">เสร็จสิ้น</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </CCollapse>
+          </td>
+        </tr>
       </template>
     </CDataTable>
   </CCardBody>
@@ -68,29 +157,28 @@ const fields = [
   { key: "ticket_number", label: "เลขที่แจ้งซ่อม", _style: "width:20%" },
   { key: "reported_datetime", label: "วันที่แจ้ง", _style: "width:10%;" },
   { key: "issue_user", label: "รายละเอียด", _style: "width:60%;" },
-  { key: "status", label: "สถาณะ", _style: "width:10%;" },
-  {
-    key: "show_details",
-    label: "",
-    _style: "width:1%",
-    sorter: false,
-    filter: false,
-  },
+  { key: "status", label: "สถานะ", _style: "width:10%;" },
+  { key: "show_details", label: "", _style: "width:5%;" },
 ];
 
 export default {
   name: "AdvancedTables",
   data() {
     return {
-      ticketsData: ticketsData.map((item, id) => {
-        return { ...item, id,issue_user: `${item.category} ${item.issue_detail} ${item.username}`};
-      }),
+      ticketsData: ticketsData.map((item, id) => ({
+        ...item,
+        id,
+        issue_user: `${item.category} ${item.issue_detail} ${item.username}`,
+      })),
       fields,
-      details: [],
-      collapseDuration: 0,
+      details: [], // เก็บ index ของแถวที่ถูกเปิด
     };
   },
   methods: {
+    toggleDetails(index) {
+      const position = this.details.indexOf(index);
+      position !== -1 ? this.details.splice(position, 1) : this.details.push(index);
+    },
     getBadge(status) {
       switch (status) {
         case "กำลังดำเนินการ":
@@ -102,13 +190,120 @@ export default {
         case "รอดำเนินการ":
           return "danger";
         default:
-          "primary";
+          return "primary";
       }
     },
-  toggleDetails(item) {
-    // ไปยังหน้าใหม่ตาม ticket_id
-    // this.$router.push(`/mockup/admin/reportlist/${item.ticket_id}`);
-  },
   },
 };
 </script>
+
+<style scoped>
+/* Work Order Timeline - แนวนอน */
+.work-order-timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px 20px;
+  margin-top: 30px;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 3px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.timeline-line.completed {
+  background: #28a745;
+}
+
+.timeline-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  z-index: 1;
+}
+
+.step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 12px;
+}
+
+.timeline-step.completed .step-circle {
+  background: #28a745;
+  border-color: #fff;
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.2);
+}
+
+.step-label {
+  text-align: center;
+  max-width: 120px;
+}
+
+.step-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.timeline-step.completed .step-status {
+  color: #28a745;
+  font-weight: 700;
+}
+
+.step-role {
+  font-size: 11px;
+  color: #6c757d;
+  line-height: 1.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .work-order-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .timeline-line {
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    height: auto;
+  }
+  
+  .timeline-line.completed {
+    background: #28a745;
+  }
+  
+  .timeline-step {
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .step-circle {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+  
+  .step-label {
+    text-align: left;
+    max-width: none;
+  }
+}
+</style>
