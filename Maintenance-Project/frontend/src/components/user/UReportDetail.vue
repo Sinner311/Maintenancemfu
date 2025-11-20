@@ -6,40 +6,127 @@
       </h4>
     </CCardHeader>
     <CCardBody class="p-4">
-      <template>
-        <div class="status-tracker">
-          <div class="progress-line"></div>
-          <div
-            v-for="(step, index) in steps"
-            :key="index"
-            class="step mt-1"
-            :class="{ active: index <= currentStep }"
-          >
-            <div class="dot"></div>
-            <div class="label">{{ step }}</div>
+      <!-- Timeline Work Order (แนวนอน) -->
+      <div class="work-order-timeline">
+        <div class="timeline-line"></div>
+
+        <!-- Step 1: User/ผู้แจ้ง -->
+        <div class="timeline-step active">
+          <div class="step-circle"></div>
+          <div class="step-label">
+            <div class="step-status">กำลังดำเนินการ</div>
+            <div class="step-role">User/ผู้แจ้ง</div>
           </div>
         </div>
-      </template>
-      <CForm>
+
+        <!-- Step 2: Supervisor/ผู้รับเรื่อง -->
+        <div class="timeline-step">
+          <div class="step-circle"></div>
+          <div class="step-label">
+            <div class="step-status">N/A</div>
+            <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
+          </div>
+        </div>
+
+        <!-- Step 3: Technician/ช่างซ่อม -->
+        <div class="timeline-step">
+          <div class="step-circle"></div>
+          <div class="step-label">
+            <div class="step-status">N/A</div>
+            <div class="step-role">Technician/ช่างซ่อม</div>
+          </div>
+        </div>
+
+        <!-- Step 4: เสร็จสิ้น -->
+        <div class="timeline-step">
+          <div class="step-circle"></div>
+          <div class="step-label">
+            <div class="step-status">N/A</div>
+            <div class="step-role">เสร็จสิ้น</div>
+          </div>
+        </div>
+      </div>
+      <CForm class="mx-5 my-2">
         <div class="d-flex align-items-center mb-4">
-          <div class="icon-box bg-gradient-primary mr-3">
-            <span style="font-size: 1.5rem">👤</span>
+          <div class="icon-box mr-3" style="background-color: #fff0c4">
+            <span style="font-size: 1.5rem">🛠️</span>
           </div>
           <div>
-            <h5 class="m-0 font-weight-bold">ข้อมูลผู้แจ้ง</h5>
-            <small class="text-muted">รายละเอียดผู้ติดต่อ</small>
+            <h5 class="m-0 font-weight-bold">ส่วนของผู้ขอใช้ใบงาน</h5>
+            <small class="text-muted">รายละเอียดผู้แจ้ง ปัญหาและสถานที่</small>
           </div>
         </div>
 
         <div class="mb-4">
           <CRow>
             <CCol sm="4">
-              <label class="lbl">ชื่อผู้แจ้ง</label>
-              <CInput value="นายสมสมสม ชายชายชาย" class="mb-0" plaintext readonly
-            /></CCol>
+              <CRow class="mb-4">
+                <CCol>
+                  <label class="lbl">วันที่/เวลา แจ้ง:</label>
+                  <CInput
+                    value="20/09/2025 10:00 น."
+                    class="mb-0"
+                    plaintext
+                    readonly
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
+                  <label class="lbl">เบอร์โทรศัพท์:</label>
+                  <CInput
+                    value="090-000-0000"
+                    class="mb-0"
+                    plaintext
+                    readonly
+                  />
+                </CCol>
+              </CRow>
+            </CCol>
             <CCol sm="4">
-              <label class="lbl">เบอร์โทรศัพท์</label>
-              <CInput value="090-000-0000" class="mb-0" plaintext readonly />
+              <CRow class="mb-4">
+                <CCol>
+                  <label class="lbl">ชื่อผู้แจ้ง:</label>
+                  <CInput
+                    value="นายสมสมสม ชายชายชาย"
+                    class="mb-0"
+                    plaintext
+                    readonly
+                  />
+                </CCol>
+              </CRow>
+              <CRow>
+                <CCol>
+                  <label class="lbl">หน่วยงาน:</label>
+                  <CInput value="ไฟฟ้า" class="mb-0" plaintext readonly />
+                </CCol>
+              </CRow>
+            </CCol>
+            <CCol sm="4">
+              <CRow class="mb-4">
+                <CCol>
+                  <label class="lbl">สถานที่/ตึก:</label>
+                  <CInput value="C2" class="mb-0" plaintext readonly />
+                </CCol>
+              </CRow>
+              <CRow class="mb-4">
+                <CCol>
+                  <label class="lbl">หมายเลขห้อง:</label>
+                  <CInput value="C2-204" class="mb-0" plaintext readonly />
+                </CCol>
+              </CRow>
+            </CCol>
+          </CRow>
+          <CRow class="mb-4">
+            <CCol>
+              <label class="lbl">ประเภทงาน:</label>
+              <CInput value="ปลั๊กไฟชำรุด" class="mb-0" plaintext readonly />
+            </CCol>
+          </CRow>
+          <CRow class="mb-4">
+            <CCol>
+              <label class="lbl">รายละเอียดปัญหา:</label>
+              <CInput value="ปลั๊กไฟชำรุด" class="mb-0" plaintext readonly />
             </CCol>
           </CRow>
         </div>
@@ -47,134 +134,107 @@
         <hr class="my-4 border-dashed" />
 
         <div class="d-flex align-items-center mb-4">
-          <div class="icon-box bg-gradient-warning mr-3">
-            <span style="font-size: 1.5rem">🛠️</span>
+          <div class="icon-box mr-3" style="background-color: #fff0c4">
+            <span style="font-size: 1.5rem">🏢</span>
           </div>
           <div>
-            <h5 class="m-0 font-weight-bold">รายละเอียดการซ่อม</h5>
-            <small class="text-muted">ระบุปัญหาและสถานที่</small>
+            <h5 class="m-0 font-weight-bold">ส่วนของผู้รับใบงาน</h5>
           </div>
         </div>
-
-        <div class="mb-3">
-          <label class="lbl">ประเภทการแจ้งซ่อม</label>
-          <multiselect
-            v-model="multi"
-            :options="multiselectOptions"
-            :multiple="true"
-            label="label"
-            track-by="label"
-            placeholder="เลือกประเภทงานซ่อม"
-            class="rounded-input"
-          />
-        </div>
-
+        <CRow>
+          <CCol sm="4">
+            <CRow>
+              <CCol>
+                <label class="lbl">วันที่/เวลา รับใบงาน:</label>
+                <CInput
+                  value="20/09/2025 10:00 น."
+                  class="mb-0"
+                  plaintext
+                  readonly
+                />
+              </CCol>
+            </CRow>
+          </CCol>
+          <CCol sm="4">
+            <CRow>
+              <CCol>
+                <label class="lbl">ชื่อผู้รับผิดชอบงาน:</label>
+                <CInput value="นายพง กร" class="mb-0" plaintext readonly />
+              </CCol>
+            </CRow>
+          </CCol>
+          <CCol sm="4">
+            <CRow>
+              <CCol>
+                <label class="lbl">ชื่อผู้ดำเนินการ:</label>
+                <CInput value="นายอะ ทิต" class="mb-0" plaintext readonly />
+              </CCol>
+            </CRow>
+          </CCol>
+        </CRow>
 
         <hr class="my-4 border-dashed" />
 
-        <CInput
-          label="หมายเลขใบแจ้งซ่อม:"
-          value="20250922-ELEC-001"
-          horizontal
-          plaintext
-        />
-        <CInput
-          label="วันที่/เวลาแจ้งซ่อม:"
-          value="22/09/2025 10:00 น."
-          horizontal
-          plaintext
-        />
-        <CInput label="ชื่อผู้แจ้ง:" value="นายสม ชาย" horizontal plaintext />
-        <CInput
-          label="เบอร์โทรผู้แจ้ง:"
-          value="090-000-0000"
-          horizontal
-          plaintext
-        />
-        <CSelect
-          label="หน่วยงานที่ต้องการแจ้งซ่อม:"
-          horizontal
-          :options="options"
-          placeholder="Please select"
-          disabled
-        />
-        <CSelect
-          label="ประเภทการแจ้งซ่อม:"
-          horizontal
-          :options="options"
-          placeholder="Please select"
-          disabled
-        />
-        <CTextarea
-          label="ปัญหา/งานซ่อม:"
-          placeholder="Content..."
-          horizontal
-          value="-"
-          plaintext
-          rows="3"
-        />
-        <template>
-          <CRow form class="form-group">
-            <CCol sm="3"> พื้นที่ปฏิบัติงาน: </CCol>
-            <CInputRadioGroup
-              :options="[
-                { label: 'ในอาคาร', value: 'ในอาคาร' },
-                { label: 'นอกอาคาร', value: 'นอกอาคาร' },
-              ]"
-              inline
-            />
+        <div class="d-flex align-items-center mb-4">
+          <div class="icon-box mr-3" style="background-color: #fff0c4">
+            <span style="font-size: 1.5rem">🧑‍🔧</span>
+          </div>
+          <div>
+            <h5 class="m-0 font-weight-bold">ส่วนของช่างผู้รับงาน</h5>
+            <small class="text-muted">รายละเอียดงานซ่อม</small>
+          </div>
+        </div>
+
+
+        <CRow class="mb-4">
+          <CCol sm="4">
+            <CRow>
+              <CCol>
+                <label class="lbl">วันที่/เวลา รับงาน:</label>
+                <CInput
+                  value="20/09/2025 10:00 น."
+                  class="mb-0"
+                  plaintext
+                  readonly
+                />
+              </CCol>
+            </CRow>
+          </CCol>
+          <CCol sm="4">
+            <CRow>
+              <CCol>
+                <label class="lbl">วันที่/เวลา เริ่มงาน:</label>
+                <CInput
+                  value="20/09/2025 10:00 น."
+                  class="mb-0"
+                  plaintext
+                  readonly
+                />
+              </CCol>
+            </CRow>
+          </CCol>
+          <CCol sm="4">
+            <CRow>
+              <CCol>
+                <label class="lbl">วันที่/เวลา เสร็จงาน:</label>
+                <CInput
+                  value="20/09/2025 10:00 น."
+                  class="mb-0"
+                  plaintext
+                  readonly
+                />
+              </CCol>
+            </CRow>
+          </CCol>
+        </CRow>
+          <CRow class="mb-4">
+            <CCol>
+              <label class="lbl">รายละเอียดผลการซ่อม:</label>
+              <CInput value="ปลั๊กไฟชำรุด" class="mb-0" plaintext readonly />
+            </CCol>
           </CRow>
-        </template>
-        <CSelect
-          label="อาคาร:"
-          horizontal
-          :options="options"
-          placeholder="Please select"
-          disabled
-        />
-        <CInput
-          label="รายละเอียดเพิ่มเติม:"
-          description="รายละเอียดสถานที่เพิ่มเติม"
-          placeholder="Text"
-          horizontal
-        />
-        <CInput label="วันที่ต้องการให้เริ่มซ่อม:" type="date" horizontal />
-        <CInputFile label="ไฟล์แนบ:" horizontal multiple custom class="mb-3" />
-        <CInput
-          label="วันที่/เวลารับงาน:"
-          value="23/09/2025 10:00 น."
-          horizontal
-          plaintext
-        />
-        <CInput
-          label="ผู้รับผิดชอบงาน:"
-          value="นายพง กร"
-          horizontal
-          plaintext
-        />
-        <CInput label="ผู้ดำเนินการ:" value="นายอะ ทิต" horizontal plaintext />
-        <CInput
-          label="วันที่/เวลาดำเนินการ:"
-          value="24/09/2025 11:00 น."
-          horizontal
-          plaintext
-        />
-        <CInput
-          label="วันที่/เวลาสำเร็จ:"
-          value="24/09/2025 12:00 น."
-          horizontal
-          plaintext
-        />
-        <CTextarea
-          label="หมายเหตุ:"
-          placeholder="Content..."
-          horizontal
-          value="-"
-          plaintext
-          rows="3"
-        />
-        <CInputFile label="ไฟล์แนบ:" horizontal multiple custom class="mb-3" />
-        <CInput label="สถานะ:" value="เสร็จสิ้น" horizontal plaintext />
+        <hr class="my-4 border-dashed" />
+
       </CForm>
       <div class="ml-auto mr-3 mb-3 col-20">
         <CButton
@@ -299,5 +359,115 @@ export default {
   width: calc((100% / 3) * var(--progress));
   z-index: 1;
 }
+
+.lbl {
+  font-weight: 600;
+  color: #495057;
+  display: block;
+  margin-bottom: 4px;
+}
 </style>
 
+<style scoped>
+/* Work Order Timeline - แนวนอน */
+.work-order-timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px 20px;
+  margin-top: 30px;
+}
+
+.timeline-line {
+  position: absolute;
+  top: 50px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 3px;
+  background: linear-gradient(to right, #007bff 25%, #e0e0e0 25%);
+  z-index: 0;
+}
+
+.timeline-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  z-index: 1;
+}
+
+.step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  border: 4px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 12px;
+}
+
+.timeline-step.active .step-circle {
+  background: #007bff;
+  border-color: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.step-label {
+  text-align: center;
+  max-width: 120px;
+}
+
+.step-status {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.timeline-step.active .step-status {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.step-role {
+  font-size: 11px;
+  color: #6c757d;
+  line-height: 1.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .work-order-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+
+  .timeline-line {
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    height: auto;
+    background: linear-gradient(to bottom, #007bff 25%, #e0e0e0 25%);
+  }
+
+  .timeline-step {
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .step-circle {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+
+  .step-label {
+    text-align: left;
+    max-width: none;
+  }
+}
+</style>
