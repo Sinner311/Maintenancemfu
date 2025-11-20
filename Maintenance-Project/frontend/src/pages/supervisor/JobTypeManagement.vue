@@ -3,9 +3,16 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
-            <h4 class="text-white card-title mb-0"><CIcon name="cil-book" size="xl"/> จัดการข้อมูล ประเภทงาน</h4>
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0 text-white"><CIcon name="cil-book" size="xl"/> จัดการข้อมูล ประเภทงาน</h4>
+            <CButton 
+              color="info" 
+              shape="pill"
+              @click="openAddModal"
+            >
+            เพิ่มประเภทงาน</CButton>
           </CCardHeader>
+          
           <JobList/>
         </CCard>
       </CCol>

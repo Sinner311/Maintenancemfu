@@ -2,16 +2,7 @@
   <CCardBody>
     <h4 class="d-flex mb-3 justify-content-between align-items-center">
       หน่วยงาน: {{ selectedDepartment.departmentName }}
-      <div>
-        <CButton
-          class="px-5"
-          block
-          color="info"
-          shape="pill"
-          @click="openAddModal"
-          >เพิ่มประเภทงาน</CButton
-        >
-      </div>
+      
     </h4>
 
     <CDataTable

@@ -4,9 +4,8 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
-            <h4 class="card-title mb-0 d-flex justify-content-between align-items-center text-white">
-              แจ้งซ่อม
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0 text-white"><CIcon name="cil-window-restore" size="xl"/>  แจ้งซ่อม</h4>
               <button class="report-btn" @click="sendReportModal = true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -16,7 +15,7 @@
                 </svg>
                 <span>แจ้งซ่อม</span>
               </button>
-            </h4>
+            
           </CCardHeader>
           <CCardBody>
             <!-- Custom Tabs -->
