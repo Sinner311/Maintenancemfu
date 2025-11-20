@@ -9,6 +9,7 @@
 
         <CCardBody>
           <CDataTable
+            class="custom-pagination"
             :items="tableUsers"
             :fields="tableFields"
             hover
@@ -74,6 +75,24 @@
     </CModal>
   </CCard>
 </template>
+
+<style>
+.custom-pagination .page-item.active .page-link {
+  background-color: #8C1007 !important; /* Example custom color */
+  border-color: #8C1007 !important;
+  color: #ffffff;
+}
+
+/* Target the text color of inactive buttons */
+.custom-pagination .page-item .page-link {
+  color: #414141; /* Dark gray for inactive text */
+}
+
+/* Target the hover state of buttons */
+.custom-pagination .page-item:not(.active) .page-link:hover {
+  background-color: #f0f0f0; /* Light gray on hover */
+}
+</style>
 
 <script>
   import { CIcon } from '@coreui/icons-vue';
