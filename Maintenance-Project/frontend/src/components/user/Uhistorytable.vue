@@ -13,8 +13,7 @@
       <!-- วันที่ -->
       <template #reported_datetime="{ item }">
         <td>
-          <div>{{ item.reported_at_time }} น.</div>
-          <div class="small">{{ item.reported_at_date }}</div>
+          <div>{{ item.reported_at_date }} {{ item.reported_at_time }} น.</div>
         </td>
       </template>
 
@@ -22,7 +21,6 @@
       <template #issue_user="{ item }">
         <td>
           <div>{{ item.category }} | {{ item.issue_detail }}</div>
-          <div class="small text-muted">ผู้แจ้ง: {{ item.username }}</div>
         </td>
       </template>
 
@@ -36,7 +34,7 @@
       </template>
 
       <!-- ปุ่มติดตาม -->
-      <template #show_details="{ item , index }">
+      <template #show_details="{ item, index }">
         <td class="text-center">
           <button
             class="btn btn-outline-primary btn-sm"
@@ -53,19 +51,23 @@
           <td colspan="5" class="p-0">
             <CCollapse :show="details.includes(index)">
               <div class="p-4 bg-light">
-                
                 <!-- Header Section -->
-                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom"
+                >
                   <h5 class="mb-0 fw-bold">ใบแจ้งซ่อม / ใบงาน (WORK ORDER)</h5>
-                  <div class="badge bg-primary text-white px-3 py-2" style="font-size: 14px;">
-                    หมายเลขในงาน<br>{{ item.ticket_number }}
+                  <div
+                    class="badge bg-primary text-white px-3 py-2"
+                    style="font-size: 14px"
+                  >
+                    หมายเลขในงาน<br />{{ item.ticket_number }}
                   </div>
                 </div>
 
                 <!-- Timeline Work Order (แนวนอน) - สถานะเสร็จสิ้นทั้งหมด -->
                 <div class="work-order-timeline">
                   <div class="timeline-line completed"></div>
-                  
+
                   <!-- Step 1: User/ผู้แจ้ง -->
                   <div class="timeline-step completed">
                     <div class="step-circle"></div>
@@ -103,10 +105,15 @@
                   </div>
                 </div>
 
-               <!-- รายละเอียดการแจ้งซ่อม -->
+                <!-- รายละเอียดการแจ้งซ่อม -->
                 <div class="mb-4 p-3 bg-white rounded">
-                  <h6 class="mb-3" style="font-size: 14px; font-weight: 600; color: #6c757d;">รายละเอียดการแจ้งซ่อม</h6>
-                  <div class="row" style="font-size: 13px;">
+                  <h6
+                    class="mb-3"
+                    style="font-size: 14px; font-weight: 600; color: #6c757d"
+                  >
+                    รายละเอียดการแจ้งซ่อม
+                  </h6>
+                  <div class="row" style="font-size: 13px">
                     <div class="col-md-6 mb-2">
                       <span class="text-muted">Ticket ID:</span>
                       <span class="ms-2">{{ item.id + 1 }}</span>
@@ -129,17 +136,23 @@
                     </div>
                     <div class="col-md-6 mb-2">
                       <span class="text-muted">วันที่แจ้ง:</span>
-                      <span class="ms-2">{{ item.reported_at_date }} {{ item.reported_at_time }} น.</span>
+                      <span class="ms-2"
+                        >{{ item.reported_at_date }}
+                        {{ item.reported_at_time }} น.</span
+                      >
                     </div>
                     <div class="col-md-6 mb-2">
                       <span class="text-muted">สถานะ:</span>
-                      <CBadge :color="getBadge(item.status)" class="ms-2" style="font-size: 11px;">
+                      <CBadge
+                        :color="getBadge(item.status)"
+                        class="ms-2"
+                        style="font-size: 11px"
+                      >
                         {{ item.status }}
                       </CBadge>
                     </div>
                   </div>
                 </div>
-
               </div>
             </CCollapse>
           </td>
@@ -151,8 +164,8 @@
 
 <style>
 .custom-pagination .page-item.active .page-link {
-  background-color: #8C1007 !important; /* Example custom color */
-  border-color: #8C1007 !important;
+  background-color: #8c1007 !important; /* Example custom color */
+  border-color: #8c1007 !important;
   color: #ffffff;
 }
 
@@ -171,10 +184,11 @@
 import ticketsData from "../data/TicketsData";
 
 const fields = [
+  { key: "reported_datetime", label: "วัน/เวลา แจ้ง", _style: "width:20%;" },
   { key: "ticket_number", label: "เลขที่แจ้งซ่อม", _style: "width:20%" },
-  { key: "reported_datetime", label: "วันที่แจ้ง", _style: "width:10%;" },
   { key: "issue_user", label: "รายละเอียด", _style: "width:60%;" },
-  { key: "status", label: "สถานะ", _style: "width:10%;" },
+  // { key: "username", label: "ผู้แจ้ง", _style: "width:60%;" },
+  { key: "status", label: "สถานะ", _style: "width:15%;" },
   { key: "show_details", label: "", _style: "width:5%;" },
 ];
 
@@ -194,7 +208,9 @@ export default {
   methods: {
     toggleDetails(index) {
       const position = this.details.indexOf(index);
-      position !== -1 ? this.details.splice(position, 1) : this.details.push(index);
+      position !== -1
+        ? this.details.splice(position, 1)
+        : this.details.push(index);
     },
     getBadge(status) {
       switch (status) {
@@ -254,7 +270,7 @@ export default {
   border-radius: 50%;
   background: #fff;
   border: 4px solid #e0e0e0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 12px;
 }
 
@@ -294,7 +310,7 @@ export default {
     align-items: flex-start;
     padding: 20px;
   }
-  
+
   .timeline-line {
     left: 20px;
     top: 0;
@@ -302,22 +318,22 @@ export default {
     width: 3px;
     height: auto;
   }
-  
+
   .timeline-line.completed {
     background: #28a745;
   }
-  
+
   .timeline-step {
     flex-direction: row;
     width: 100%;
     margin-bottom: 30px;
   }
-  
+
   .step-circle {
     margin-right: 15px;
     margin-bottom: 0;
   }
-  
+
   .step-label {
     text-align: left;
     max-width: none;

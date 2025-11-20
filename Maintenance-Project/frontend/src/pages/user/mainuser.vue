@@ -54,6 +54,7 @@
             </div>
           </CCardBody>
         </CCard>
+        <UReportDetail />
       </CCol>
     </CRow>
     <SendReport v-model="sendReportModal" />
@@ -65,6 +66,8 @@ import Uhistorytable from "../../components/user/Uhistorytable.vue";
 import Ureportable from "../../components/user/Ureportable.vue";
 import Ureportbutton from "../../components/user/Ureportbutton.vue";
 import SendReport from "../../components/user/SendReport";
+import UReportDetail from "../../components/user/UReportDetail";
+
 
 export default {
   name: "Dashboard",
@@ -73,12 +76,13 @@ export default {
     Ureportbutton,
     Uhistorytable,
     SendReport,
+    UReportDetail,
   },
   data() {
     return {
       selected: "Month",
       sendReportModal: false,
-      activeTab: "history", // เริ่มต้นที่ประวัติแจ้งซ่อม
+      activeTab: "report", // เริ่มต้นที่ประวัติแจ้งซ่อม
     };
   },
   methods: {
