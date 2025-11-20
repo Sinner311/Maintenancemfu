@@ -2,46 +2,40 @@
   <CCard class=" shadow-sm rounded-3 bg-white">
     <CRow class="">
       <CCol md="">
-          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
-            <h4 class="text-white card-title mb-0"><CIcon name="cil-people" size="xl"/> จัดการข้อมูลเจ้าหน้าที่</h4>
+          <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0 text-white"><CIcon name="cil-people" size="xl"/> จัดการข้อมูลเจ้าหน้าที่</h4>
+            <CButton color="success" shape="pill">เพิ่มเจ้าหน้าที่</CButton>
           </CCardHeader>
 
-          <CCardBody class="">
+          <CCardBody>
+          <CDataTable
+            class="custom-pagination"
+            :items="tableUsers"
+            :fields="tableFields"
+            hover
+            striped
+            sorter
+            pagination
+            :items-per-page="5"
+            table-filter
+            items-per-page-select
+          >
+            <template #category="{ item }">
+              <td>{{ item.category || '—' }}</td>
+            </template>
 
-            <CDataTable
-              class="custom-pagination"
-              :items="tableUsers"
-              :fields="tableFields"
-              hover
-              pagination
-              :items-per-page="10"
-              table-filter
-              items-per-page-select
-            >
-              <template #user_info="{ item }">
-                <td>
-                  <div><strong>{{ item.username }}</strong> | {{ item.role }}</div>
-                  <div class="small text-muted">{{ item.email }} | {{ item.phone }}</div>
-                </td>
-              </template>
-
-              <template #category="{ item }">
-                <td>{{ item.category || '—' }}</td>
-              </template>
-
-              <template #actions="{ item }">
-                <td class="text-center">
-                  <CButton size="lg" color="primary" shape="pill" @click="openEditModal(item)">
-                    Edit
-                  </CButton>
-                </td>
-              </template>
-            </CDataTable>
-          </CCardBody>
+            <template #actions="{ item }">
+              <td class="text-center">
+                <CButton size="sm" color="primary" shape="pill" @click="openEditModal(item)"> 
+                  Edit
+                </CButton>
+              </td>
+            </template>
+          </CDataTable>
+        </CCardBody>
       </CCol>
     </CRow>
 
-    <!-- Modal -->
     <CModal title="Edit User" :show.sync="showModal" size="lg" color="warning" centered>
       <CModalBody v-if="editUser">
         <CForm>
@@ -57,6 +51,7 @@
                   :options="roleOptions"
                   :value="editUser.role"
                   @change="e => editUser.role = e.target.value"
+                  disabled
                 />
               </CCol>
               <CCol sm="6">
@@ -65,6 +60,7 @@
                   :options="categoryOptions"
                   :value="editUser.category"
                   @change="e => editUser.category = e.target.value"
+                  disabled
                 />
               </CCol>
             </CRow>
@@ -99,6 +95,8 @@
 </style>
 
 <script>
+import { CIcon } from '@coreui/icons-vue';
+import * as icon from '@coreui/icons';
 export default {
   name: 'UsersList',
   data() {
@@ -116,10 +114,14 @@ export default {
         { id: 8, username: 'Rungnapa Suthida', email: 'SPV0000004@mfu.ac.th', phone: '0867778888', role: 'Supervisor', category: 'ระบบปะปา' },
       ],
       tableFields: [
-        { key: 'user_info', label: 'User Info', _style: 'width:50%' },
-        { key: 'role', label: 'Role', _style: 'width:15%' },
-        { key: 'category', label: 'Category', _style: 'width:15%' },
-        { key: 'actions', label: 'Actions', _style: 'width:20%', sorter: false, filter: false, _classes: 'text-center' },
+        // New fields for separating User Info
+        { key: 'username', label: 'Name', _style: 'width:15%', sorter: true },
+        { key: 'email', label: 'Email', _style: 'width:20%', sorter: true },
+        { key: 'phone', label: 'Phone', label: 'Phone', _style: 'width:15%', sorter: true },
+        // Existing fields
+        { key: 'role', label: 'Role', _style: 'width:10%', sorter: true },
+        { key: 'category', label: 'Category', _style: 'width:15%', sorter: true },
+        { key: 'actions', label: 'Actions', _style: 'width:10%', sorter: false, filter: false, _classes: 'text-center' },
       ],
       roleOptions: [
         { value: 'Supervisor', label: 'Supervisor' },
