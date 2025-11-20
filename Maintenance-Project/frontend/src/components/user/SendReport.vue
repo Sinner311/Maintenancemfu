@@ -55,16 +55,7 @@
           />
         </div>
 
-        <div class="mb-3">
-          <label class="lbl">ปัญหา/งานซ่อม</label>
-          <div class="editor-wrapper">
-            <quill-editor
-              :content="content"
-              :options="editorOption"
-              @change="onEditorChange($event)"
-            />
-          </div>
-        </div>
+       
 
         <div class="mb-3">
           <label class="lbl">พื้นที่ปฏิบัติงาน</label>
@@ -108,6 +99,17 @@
             </div>
           </div>
         </transition>
+
+         <div class="my-3">
+          <label class="lbl">ปัญหา/งานซ่อม</label>
+          <div class="editor-wrapper">
+            <quill-editor
+              :content="content"
+              :options="editorOption"
+              @change="onEditorChange($event)"
+            />
+          </div>
+        </div>
       </CForm>
     </CModalBody>
 

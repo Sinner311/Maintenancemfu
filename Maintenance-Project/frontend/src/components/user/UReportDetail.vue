@@ -21,6 +21,57 @@
         </div>
       </template>
       <CForm>
+        <div class="d-flex align-items-center mb-4">
+          <div class="icon-box bg-gradient-primary mr-3">
+            <span style="font-size: 1.5rem">👤</span>
+          </div>
+          <div>
+            <h5 class="m-0 font-weight-bold">ข้อมูลผู้แจ้ง</h5>
+            <small class="text-muted">รายละเอียดผู้ติดต่อ</small>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <CRow>
+            <CCol sm="4">
+              <label class="lbl">ชื่อผู้แจ้ง</label>
+              <CInput value="นายสมสมสม ชายชายชาย" class="mb-0" plaintext readonly
+            /></CCol>
+            <CCol sm="4">
+              <label class="lbl">เบอร์โทรศัพท์</label>
+              <CInput value="090-000-0000" class="mb-0" plaintext readonly />
+            </CCol>
+          </CRow>
+        </div>
+
+        <hr class="my-4 border-dashed" />
+
+        <div class="d-flex align-items-center mb-4">
+          <div class="icon-box bg-gradient-warning mr-3">
+            <span style="font-size: 1.5rem">🛠️</span>
+          </div>
+          <div>
+            <h5 class="m-0 font-weight-bold">รายละเอียดการซ่อม</h5>
+            <small class="text-muted">ระบุปัญหาและสถานที่</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="lbl">ประเภทการแจ้งซ่อม</label>
+          <multiselect
+            v-model="multi"
+            :options="multiselectOptions"
+            :multiple="true"
+            label="label"
+            track-by="label"
+            placeholder="เลือกประเภทงานซ่อม"
+            class="rounded-input"
+          />
+        </div>
+
+
+        <hr class="my-4 border-dashed" />
+
         <CInput
           label="หมายเลขใบแจ้งซ่อม:"
           value="20250922-ELEC-001"
