@@ -19,20 +19,39 @@
             </h4>
           </CCardHeader>
           <CCardBody>
-            <CTabs add-tab-classes="mt-1">
-              <CTab>
-                <template slot="title">
-                  <CIcon name="cil-description" /> รายการแจ้งซ่อม
-                </template>
-                <Ureportable />
-              </CTab>
-              <CTab active>
-                <template slot="title">
-                  <CIcon name="cil-book" /> ประวัติแจ้งซ่อม
-                </template>
-                <Uhistorytable />
-              </CTab>
-            </CTabs>
+            <!-- Custom Tabs -->
+            <div class="custom-tabs">
+              <div class="tabs-header">
+                <button 
+                  :class="['tab-item', { active: activeTab === 'report' }]"
+                  @click="activeTab = 'report'"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                  <span>รายการแจ้งซ่อม</span>
+                </button>
+                <button 
+                  :class="['tab-item', { active: activeTab === 'history' }]"
+                  @click="activeTab = 'history'"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  </svg>
+                  <span>ประวัติแจ้งซ่อม</span>
+                </button>
+              </div>
+              <div class="tabs-content">
+                <div v-show="activeTab === 'report'" class="tab-panel">
+                  <Ureportable />
+                </div>
+                <div v-show="activeTab === 'history'" class="tab-panel">
+                  <Uhistorytable />
+                </div>
+              </div>
+            </div>
           </CCardBody>
         </CCard>
       </CCol>
@@ -59,6 +78,7 @@ export default {
     return {
       selected: "Month",
       sendReportModal: false,
+      activeTab: "history", // เริ่มต้นที่ประวัติแจ้งซ่อม
     };
   },
   methods: {
@@ -115,6 +135,87 @@ export default {
   50% {
     box-shadow: 0 6px 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(16, 185, 129, 0.5);
     transform: scale(1.05);
+  }
+}
+
+/* Custom Tabs Styling */
+.custom-tabs {
+  margin-top: 20px;
+}
+
+.tabs-header {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid #e9ecef;
+  margin-bottom: 20px;
+}
+
+.tab-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  background: transparent;
+  color: #6c757d;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  bottom: -2px;
+}
+
+.tab-item svg {
+  transition: all 0.3s ease;
+}
+
+.tab-item:hover {
+  color: #495057;
+  background: #f8f9fa;
+}
+
+.tab-item:hover svg {
+  transform: translateY(-2px);
+}
+
+.tab-item.active {
+  color: #cd1212;
+  font-weight: 600;
+  border-bottom-color: #cd1212;
+  background: linear-gradient(to bottom, rgba(0, 123, 255, 0.05), transparent);
+}
+
+.tab-item.active svg {
+  color: #cd1212;
+}
+
+.tabs-content {
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-panel {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 </style>

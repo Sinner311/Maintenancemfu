@@ -1,91 +1,103 @@
 <template>
-  <CModal
-    title="แจ้งซ่อม"
-    size="lg"
-    :show.sync="localModal"
-    @update:show="updateParent"
-  >
-    <CModalBody class="p-4">
+  <CModal title="แจ้งซ่อม" size="lg" :show.sync="localModal" :close-on-backdrop="false">
+    <CModalBody class="p-4 body-font">
       <CForm>
-        <CInput label="ชื่อผู้แจ้ง:" value="นายสม ชาย" horizontal plaintext />
-        <CInput
-          label="เบอร์โทรผู้แจ้ง:"
-          value="090-000-0000"
-          placeholder="กรุณาใส่เบอร์โทร"
-          horizontal
-        />
-        <template>
-          <CRow form class="form-group">
-            <CCol sm="3" class="col-form-label"> ประเภทการแจ้งซ่อม:</CCol>
-            <CCol sm="9">
-              <multiselect
-                v-model="multi"
-                :options="multiselectOptions"
-                :multiple="true"
-                label="label"
-                track-by="label"
-                placeholder="เลือกประเภทการแจ้งซ่อม"
-              />
-            </CCol>
-          </CRow>
-        </template>
-        <template>
-          <CRow form class="form-group">
-            <CCol sm="3" class="col-form-label"> ปัญหา/งานซ่อม:</CCol>
-            <CCol sm="9">
-              <template>
-                <quill-editor
-                  :content="content"
-                  :options="editorOption"
-                  @change="onEditorChange($event)"
-                />
-              </template>
-            </CCol>
-          </CRow>
-        </template>
-        <template>
-  <CRow form class="form-group">
-    <CCol sm="3"> พื้นที่ปฏิบัติงาน: </CCol>
-    <CCol sm="9" class="d-flex align-items-center">
-      
-      <label class="c-radio-inline mr-3">
-        <input type="radio" value="indoor" v-model="workingArea" />
-        ในอาคาร
-      </label>
+        <div class="d-flex align-items-center mb-4">
+          <div class="icon-box bg-gradient-primary mr-3">
+            <span style="font-size: 1.5rem;">👤</span>
+          </div>
+          <div>
+            <h5 class="m-0 font-weight-bold">ข้อมูลผู้แจ้ง</h5>
+            <small class="text-muted">รายละเอียดผู้ติดต่อ</small>
+          </div>
+        </div>
+        
+        <div class="mb-4">
+          <div class="mb-3">
+            <label class="lbl">ชื่อผู้แจ้ง</label>
+            <CInput value="นายสม ชาย" class="mb-0" plaintext readonly />
+          </div>
+          <div>
+            <label class="lbl">เบอร์โทรศัพท์</label>
+            <CInput value="090-000-0000" class="mb-0" />
+          </div>
+        </div>
 
-      <label class="c-radio-inline">
-        <input type="radio" value="outdoor" v-model="workingArea" />
-        นอกอาคาร
-      </label>
-      
-    </CCol>
-  </CRow>
+        <hr class="my-4 border-dashed">
 
-  <template v-if="workingArea === 'indoor'">
-    <CRow form class="form-group">
-      <CCol sm="3"> อาคาร: </CCol>
-      <CCol sm="9">
-        <CSelect :options="options" placeholder="Please select" />
-      </CCol>
-    </CRow>
-  </template>
+        <div class="d-flex align-items-center mb-4">
+          <div class="icon-box bg-gradient-warning mr-3">
+            <span style="font-size: 1.5rem;">🛠️</span>
+          </div>
+          <div>
+            <h5 class="m-0 font-weight-bold">รายละเอียดการซ่อม</h5>
+            <small class="text-muted">ระบุปัญหาและสถานที่</small>
+          </div>
+        </div>
 
-  <template v-else-if="workingArea === 'outdoor'">
-  <CRow form class="form-group">
-    <CCol sm="3" />
-    <CCol sm="9">
-      <GoogleMapsPicker v-model="outdoorLocation" /> 
-      <small class="form-text text-muted">กรุณาปักหมุดตำแหน่งที่ตั้ง</small>
-    </CCol>
-  </CRow>
-</template>
-  
-  </template>
+        <div class="mb-3">
+          <label class="lbl">ประเภทการแจ้งซ่อม</label>
+          <multiselect 
+            v-model="multi" 
+            :options="multiselectOptions" 
+            :multiple="true" 
+            label="label" 
+            track-by="label" 
+            placeholder="เลือกประเภทงานซ่อม" 
+            class="rounded-input" 
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="lbl">ปัญหา/งานซ่อม</label>
+          <div class="editor-wrapper">
+            <quill-editor
+              :content="content"
+              :options="editorOption"
+              @change="onEditorChange($event)"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="lbl">พื้นที่ปฏิบัติงาน</label>
+          <div class="area-grid">
+            <label class="area-card" :class="{active: workingArea===val}" v-for="val in ['indoor','outdoor']" :key="val">
+              <input type="radio" :value="val" v-model="workingArea" class="d-none">
+              <div class="h2 mb-1">{{ val==='indoor'?'🏢':'🌳' }}</div>
+              <div>
+                <strong>{{ val==='indoor'?'ในอาคาร':'นอกอาคาร' }}</strong><br>
+                <small class="text-muted capitalize">{{ val }}</small>
+              </div>
+              <div class="check">✓</div>
+            </label>
+          </div>
+        </div>
+
+        <transition name="fade">
+          <div v-if="workingArea === 'indoor'" class="sub-box">
+            <label class="lbl">ระบุอาคาร</label>
+            <CSelect :options="options" placeholder="เลือกอาคาร..." class="mb-0" />
+          </div>
+          <div v-else-if="workingArea === 'outdoor'" class="sub-box">
+            <label class="lbl">ปักหมุดตำแหน่ง</label>
+            <div class="border rounded overflow-hidden">
+              <GoogleMapsPicker v-model="outdoorLocation" />
+            </div>
+          </div>
+        </transition>
       </CForm>
     </CModalBody>
+
     <template #footer>
-      <CButton color="secondary" @click="localModal = false">ยกเลิก</CButton>
-      <CButton color="success" @click="sendReport">ส่ง</CButton>
+      <div class="d-flex w-100">
+        <CButton color="danger" variant="outline" class="flex-grow-1 mr-2 font-weight-bold" @click="localModal=false">
+          ยกเลิก
+        </CButton>
+        <CButton color="success" class="flex-grow-1 font-weight-bold text-white" @click="sendReport">
+          <i class="cil-send mr-1"></i> ยืนยัน
+        </CButton>
+      </div>
     </template>
   </CModal>
 </template>
@@ -93,165 +105,88 @@
 <script>
 import Vue from "vue";
 import Multiselect from "vue-multiselect";
+import Quill from "vue-quill-editor";
+import GoogleMapsPicker from './UGoogleMapsPicker.vue';
 import "vue-select/dist/vue-select.css";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import Quill from "vue-quill-editor";
-import GoogleMapsPicker from './UGoogleMapsPicker.vue'
 
 Vue.use(Quill);
 
 export default {
   name: "Forms",
-  components: {
-    Multiselect,
-    Quill,
-    GoogleMapsPicker,
-  },
-  props: {
-    value: { type: Boolean, default: false }, // รับค่าจาก v-model
-  },
-  data() {
-    return {
-      workingArea: "",
-      outdoorLocation: {},
-      localModal: this.value, // ใช้ภายใน component
-      steps: ["รับเรื่องแล้ว", "รอดำเนินการ", "กำลังดำเนินการ", "เสร็จสิ้น"],
-      currentStep: 3,
-      selected: [], // Must be an array reference!
-      show: true,
-      horizontal: { label: "col-3", input: "col-9" },
-      multi: [], // ตัวแปรสำหรับ v-model (ค่าเริ่มต้นควรเป็น array เปล่า)
-      multiselectOptions: [
-        // ตัวเลือกสำหรับ multiselect
-        { label: "ไฟฟ้า", code: "ELEC" },
-        { label: "ประปา/สุขภัณฑ์", code: "PLUM" },
-        { label: "เครื่องปรับอากาศ", code: "AC" },
-        { label: "เฟอร์นิเจอร์", code: "FURN" },
-      ],
-      options: ["Option 1", "Option 2", "Option 3"],
-      selectOptions: [
-        "Option 1",
-        "Option 2",
-        "Option 3",
-        {
-          value: ["some value", "another value"],
-          label: "Selected option",
-        },
-      ],
-      selectedOption: ["some value", "another value"],
-
-      formCollapsed: true,
-      checkboxNames: [
-        "Checkboxes",
-        "Inline Checkboxes",
-        "Checkboxes - custom",
-        "Inline Checkboxes - custom",
-      ],
-      radioNames: [
-        "Radios",
-        "Inline Radios",
-        "Radios - custom",
-        "Inline Radios - custom",
-      ],
-      editorOption: {
-        theme: "snow",
-        modules: {
-          toolbar: {
-            container: [["link", "image", "video"]],
-          },
-        },
-        placeholder: "เขียนปัญหาที่พบพร้อมแนบไฟล์รูปที่เกี่ยวข้อง...",
-      },
-    };
-  },
+  components: { Multiselect, Quill, GoogleMapsPicker },
+  props: { value: Boolean },
+  data: () => ({
+    localModal: false,
+    workingArea: "",
+    outdoorLocation: {},
+    multi: [],
+    content: "",
+    options: ["Option 1", "Option 2", "Option 3"],
+    multiselectOptions: [{label:"ไฟฟ้า",code:"ELEC"},{label:"ประปา",code:"PLUM"},{label:"แอร์",code:"AC"},{label:"เฟอร์นิเจอร์",code:"FURN"}],
+    editorOption: { theme: "snow", modules: { toolbar: [["link", "image"]] }, placeholder: "รายละเอียด..." }
+  }),
   watch: {
-    value(val) {
-      this.localModal = val; // อัปเดตค่าภายในเมื่อ parent เปลี่ยน
-    },
-    localModal(val) {
-      this.$emit("input", val); // แจ้ง parent เมื่อ modal ปิด/เปิด
-    },
+    value(val) { this.localModal = val; },
+    localModal(val) { this.$emit("input", val); }
   },
+  created() { this.localModal = this.value; },
   methods: {
-    validator(val) {
-      return val ? val.length >= 4 : false;
-    },
-    sendReport() {
-      alert("ส่งใบแจ้งซ่อมเรียบร้อย!");
-      this.localModal = false;
-    },
-    updateParent(val) {
-      this.localModal = val;
-    },
-  },
+    sendReport() { alert("ส่งเรียบร้อย!"); this.localModal = false; },
+    onEditorChange({ quill, html, text }) { this.content = html; }
+  }
 };
 </script>
 
 <style scoped>
-.status-tracker {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 40px 0;
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap');
+
+/* แก้ไขตรงนี้: เอา background: #f8f9fa ออกไปแล้ว */
+.body-font { 
+  font-family: 'Sarabun', sans-serif; 
+  background: white; /* บังคับให้เป็นสีขาว */
 }
 
-/* เส้นหลัก */
-.progress-line {
-  position: absolute;
-  top: 12px;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: #dcdcdc;
-  z-index: 1;
+.lbl { font-weight: 600; color: #495057; display: block; margin-bottom: 4px; }
+
+.icon-box { 
+  min-width: 48px; 
+  width: 48px; 
+  height: 48px; 
+  border-radius: 12px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  color: #fff; 
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
 }
 
-.col-20 {
-  width: 20%;
-}
-/* จุดแต่ละขั้น */
-.step {
-  position: relative;
-  text-align: center;
-  flex: 1;
-  z-index: 2;
-}
+.bg-gradient-primary { background: linear-gradient(135deg, #321fdb, #1b0e8c); }
+.bg-gradient-warning { background: linear-gradient(135deg, #f9b115, #f6960b); }
 
-.dot {
-  width: 20px;
-  height: 20px;
-  margin: 0 auto;
-  border-radius: 50%;
-  background-color: #dcdcdc;
-  border: 2px solid #dcdcdc;
-}
+.border-dashed { border-top: 1px dashed #ccc; }
+.rounded-input >>> .multiselect__tags { border-radius: 6px; border-color: #ced4da; }
 
-/* ข้อความใต้จุด */
-.label {
-  margin-top: 8px;
-  font-size: 13px;
-  white-space: nowrap;
-}
+.editor-wrapper { background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); border: 1px solid #ced4da; }
+.quill-editor >>> .ql-container { min-height: 100px; font-size: 16px; }
+.quill-editor >>> .ql-toolbar { background-color: #f1f3f5; border-bottom: 1px solid #dee2e6; }
 
-/* จุดที่ active หรือผ่านแล้ว */
-.step.active .dot {
-  background-color: #20a8d8; /* สี info */
-  border-color: #20a8d8;
+.area-grid { display: flex; justify-content: space-between; }
+.area-card { 
+  width: 48%; 
+  background: #fff; border: 2px solid #e9ecef; border-radius: 12px; padding: 15px; 
+  text-align: center; cursor: pointer; position: relative; transition: all 0.2s; height: 110px; 
+  display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 0;
 }
+.area-card:hover { border-color: #bdc3c7; transform: translateY(-2px); }
+.area-card.active { border-color: #2eb85c; background: #f0fff4; color: #2eb85c; box-shadow: 0 6px 12px rgba(46,184,92,0.15); }
 
-/* เพิ่มเส้นไฮไลท์ตามสถานะปัจจุบัน */
-.status-tracker::before {
-  content: "";
-  position: absolute;
-  top: 12px;
-  left: 0;
-  height: 4px;
-  background-color: #20a8d8;
-  width: calc((100% / 3) * var(--progress));
-  z-index: 1;
-}
+.check { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #e9ecef; color: transparent; font-size: 12px; display: flex; justify-content: center; align-items: center; }
+.area-card.active .check { background: #2eb85c; border-color: #2eb85c; color: #fff; }
+
+.sub-box { background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #e2e6ea; margin-top: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.fade-enter-active { transition: 0.3s; } .fade-enter, .fade-leave-to { transform: translateY(-10px); opacity: 0; }
+.capitalize { text-transform: capitalize; }
 </style>

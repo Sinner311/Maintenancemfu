@@ -61,45 +61,6 @@
                   </div>
                 </div>
 
-                <!-- รายละเอียดการแจ้งซ่อม -->
-                <div class="mb-4 p-3 bg-white rounded border">
-                  <h6 class="fw-bold mb-3 text-primary">
-                    <i class="cil-clipboard me-2"></i>รายละเอียดการแจ้งซ่อม
-                  </h6>
-                  <div class="row">
-                    <div class="col-md-6 mb-2">
-                      <span class="text-muted">Ticket ID:</span>
-                      <strong class="ms-2">{{ item.id + 1 }}</strong>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <span class="text-muted">เลขที่แจ้งซ่อม:</span>
-                      <strong class="ms-2">{{ item.ticket_number }}</strong>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <span class="text-muted">ประเภท:</span>
-                      <strong class="ms-2">{{ item.category }}</strong>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <span class="text-muted">ผู้แจ้ง:</span>
-                      <strong class="ms-2">{{ item.username }}</strong>
-                    </div>
-                    <div class="col-12 mb-2">
-                      <span class="text-muted">รายละเอียด:</span>
-                      <strong class="ms-2">{{ item.issue_detail }}</strong>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <span class="text-muted">วันที่แจ้ง:</span>
-                      <strong class="ms-2">{{ item.reported_at_date }} {{ item.reported_at_time }} น.</strong>
-                    </div>
-                    <div class="col-md-6 mb-2">
-                      <span class="text-muted">สถานะ:</span>
-                      <CBadge :color="getBadge(item.status)" class="ms-2">
-                        {{ item.status }}
-                      </CBadge>
-                    </div>
-                  </div>
-                </div>
-
                 <!-- Timeline Work Order (แนวนอน) - สถานะเสร็จสิ้นทั้งหมด -->
                 <div class="work-order-timeline">
                   <div class="timeline-line completed"></div>
@@ -137,6 +98,43 @@
                     <div class="step-label">
                       <div class="step-status">เสร็จสิ้น</div>
                       <div class="step-role">เสร็จสิ้น</div>
+                    </div>
+                  </div>
+                </div>
+
+               <!-- รายละเอียดการแจ้งซ่อม -->
+                <div class="mb-4 p-3 bg-white rounded">
+                  <h6 class="mb-3" style="font-size: 14px; font-weight: 600; color: #6c757d;">รายละเอียดการแจ้งซ่อม</h6>
+                  <div class="row" style="font-size: 13px;">
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">Ticket ID:</span>
+                      <span class="ms-2">{{ item.id + 1 }}</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">เลขที่แจ้งซ่อม:</span>
+                      <span class="ms-2">{{ item.ticket_number }}</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">ประเภท:</span>
+                      <span class="ms-2">{{ item.category }}</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">ผู้แจ้ง:</span>
+                      <span class="ms-2">{{ item.username }}</span>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <span class="text-muted">รายละเอียด:</span>
+                      <span class="ms-2">{{ item.issue_detail }}</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">วันที่แจ้ง:</span>
+                      <span class="ms-2">{{ item.reported_at_date }} {{ item.reported_at_time }} น.</span>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">สถานะ:</span>
+                      <CBadge :color="getBadge(item.status)" class="ms-2" style="font-size: 11px;">
+                        {{ item.status }}
+                      </CBadge>
                     </div>
                   </div>
                 </div>
