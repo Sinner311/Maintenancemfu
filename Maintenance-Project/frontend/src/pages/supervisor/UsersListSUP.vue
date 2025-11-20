@@ -3,7 +3,7 @@
     <CRow>
       <CCol>
         <CCardHeader class="bg-primary border-bottom d-flex justify-content-between align-items-center">
-          <h4 class="card-title mb-0 text-white"><CIcon name="cil-user" size="xl"/> จัดการข้อมูลพนักงานช่าง</h4>
+          <h4 class="card-title mb-0 text-white"><CIcon name="cil-people" size="xl"/> จัดการข้อมูลพนักงานช่าง</h4>
           <CButton color="success" shape="pill">เพิ่มเจ้าหน้าที่</CButton>
         </CCardHeader>
 

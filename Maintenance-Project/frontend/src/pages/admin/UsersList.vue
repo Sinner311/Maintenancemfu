@@ -2,8 +2,8 @@
   <CCard class=" shadow-sm rounded-3 bg-white">
     <CRow class="">
       <CCol md="">
-          <CCardHeader class="bg-white border-bottom">
-            <h4 class="card-title mb-0">จัดการข้อมูลเจ้าหน้าที่</h4>
+          <CCardHeader class="bg-primary border-bottom">
+            <h4 class="text-white card-title mb-0"><CIcon name="cil-people" size="xl"/> จัดการข้อมูลเจ้าหน้าที่</h4>
           </CCardHeader>
 
           <CCardBody class="">

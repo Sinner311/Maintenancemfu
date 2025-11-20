@@ -1,7 +1,7 @@
 <template>
   <CCard>
-    <CCardHeader>
-      <h4 class="card-title mb-0">รายละเอียดใบแจ้งซ่อม</h4>
+    <CCardHeader class="bg-primary border-bottom">
+      <h4 class="text-white card-title mb-0"><CIcon name="cil-description" size="xl"/> รายละเอียดใบแจ้งซ่อม</h4>
     </CCardHeader>
     <CCardBody class="p-4">
       <template>
