@@ -2,64 +2,58 @@
   <CCardBody>
     <div class="ml-auto mr-3 mb-3 col-20">
       <CButton block color="info" shape="pill" @click="openAddModal"
-        >เพิ่มอาคาร</CButton
+        >เพิ่มข้อมูลห้อง</CButton
       >
     </div>
 
-    <CDataTable :items="buildingsData" :fields="fields" hover pagination>
-      <!-- แสดงชื่อแผนก -->
-      <template #departmentName="{ item }">
-        <td>
-          <strong>{{ item.departmentName }}</strong>
+    <CDataTable 
+    :items="groupedBuildingsData" 
+    :fields="fields" 
+    table-filter
+    hover 
+    pagination
+    >
+      
+      <template #buildingCode="{ item }">
+        <td class="p-2">
+          <strong>{{ item.buildingCode }}</strong>
         </td>
       </template>
 
-      <!-- Column: subCategories (table ย่อย) -->
-      <template #subCategories="{ item }">
-        <table class="table table-sm table-bordered mb-0 fixed-table">
-          <thead>
-            <tr>
-              <th class="col-70">ชื่อประเภทงาน</th>
-              <th class="col-30">SLA (ชั่วโมง)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(sub, index) in item.subCategories" :key="index">
-              <td>{{ sub.name }}</td>
-              <td>{{ sub.slaHours }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </template>
-
-      <!-- ปุ่มแสดงรายละเอียด -->
-      <template #show_details="{ item }">
-        <td class="py-2 text-center">
-          <CCol>
-            <CRow>
-              <CButton
-                size="sm"
-                variant="outline"
-                color="danger"
-                class="ml-2"
-                shape="pill"
-                @click="deleteDepartment(item)"
-              >
-                ลบ
-              </CButton></CRow
-            >
-          </CCol>
+      <template #rooms="{ item }">
+        <td class="p-0">
+          <table class="table table-sm table-bordered mb-0 fixed-table">
+            <tbody>
+              <tr v-for="(room, index) in item.rooms" :key="room.ROOMID">
+                <td>{{ room.ROOMNAME }}</td>
+                <td class="text-center">
+                  <CButton
+                    size="sm"
+                    variant="outline"
+                    color="danger"
+                    shape="pill"
+                    @click="deleteRoom(room)" >
+                    ลบ
+                  </CButton>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </td>
       </template>
     </CDataTable>
 
-    <!-- Modal เพิ่มหน่วยงานใหม่ -->
     <CModal title="เพิ่มอาคารใหม่" size="md" :show.sync="addModal">
       <div>
         <CInput
           label="ชื่ออาคาร"
           placeholder="กรอกชื่ออาคาร...."
-          v-model="newDepartmentName"
+          v-model="newBuildingCode"
+        />
+        <CInput
+          label="ชื่อห้อง"
+          placeholder="กรอกชื่อห้อง...."
+          v-model="newRoomName"
         />
       </div>
 
@@ -68,35 +62,74 @@
         <CButton color="success" @click="addDepartment">เพิ่ม</CButton>
       </template>
     </CModal>
-
-    
   </CCardBody>
 </template>
 
 <script>
 import { CCol } from "@coreui/vue-pro";
-import buildingsData from "../data/BuildingsData";
+// นำเข้าข้อมูลใหม่ของคุณ
+import rawBuildingsData from "../data/BuildingsData"; // เปลี่ยนชื่อตัวแปรที่นำเข้า
 
 export default {
   name: "JobTypeManagement",
   data() {
     return {
-      buildingsData,
+      // 1. เก็บข้อมูลดิบ
+      rawBuildingsData, 
+      // 2. กำหนด Fields ใหม่
       fields: [
-        { key: "building_name", label: "ชื่ออาคาร", _style: "width:20%" },
-        {
-          key: "show_details",
-          label: "",
-          _style: "width:5%",
-          sorter: false,
-          filter: false,
+        { 
+          key: "buildingCode", 
+          label: "อาคาร", 
+          _style: "width:20%",
+          // ทำให้กด Sort ได้ตามชื่ออาคาร
+          sortUsing: (a, b) => a.buildingCode.localeCompare(b.buildingCode) 
+        },
+        { 
+          key: "rooms", 
+          label: "ห้อง", 
+          _style: "width:75%", 
+          sorter: false, 
+          filter: false 
         },
       ],
       addModal: false,
-      selectedDepartment: null,
-      newDepartmentName: "",
+      newDepartmentName: "", // ยังคงใช้ V-model เดิม
     };
   },
+  
+  // 3. Computed Property สำหรับจัดกลุ่มข้อมูล
+  computed: {
+    groupedBuildingsData() {
+      // สร้าง Map เพื่อจัดกลุ่มห้องตาม BUILDINGCODE
+      const grouped = rawBuildingsData.reduce((acc, room) => {
+        const code = room.BUILDINGCODE;
+        if (!acc[code]) {
+          acc[code] = {
+            buildingCode: code,
+            _rowVariant: 'info', // ใช้สำหรับเน้นแถวหลักของอาคาร
+            rooms: [], // เก็บรายการห้องในอาคารนี้
+          };
+        }
+        
+        // เพิ่มข้อมูลห้อง
+        acc[code].rooms.push({
+          ROOMCODE: room.ROOMCODE,
+          ROOMNAME: room.ROOMNAME,
+          ROOMID: room.ROOMID, // ใช้เป็น key ในการลบ
+        });
+
+        // จัดเรียงห้องภายในอาคารตาม ROOMCODE
+        acc[code].rooms.sort((a, b) => a.ROOMCODE.localeCompare(b.ROOMCODE));
+        
+        return acc;
+      }, {});
+
+      // แปลง Map เป็น Array และจัดเรียงตาม BUILDINGCODE
+      return Object.values(grouped).sort((a, b) => a.buildingCode.localeCompare(b.buildingCode));
+    }
+  },
+
   methods: {
     openAddModal() {
       this.newDepartmentName = "";
@@ -105,19 +138,49 @@ export default {
 
     addDepartment() {
       if (!this.newDepartmentName.trim()) {
-        alert("กรุณากรอกชื่อหน่วยงานก่อน");
+        alert("กรุณากรอกชื่ออาคารก่อน");
         return;
       }
 
-      const newDept = {
-        _id: { $oid: new Date().getTime().toString() }, // สร้าง id จำลอง
-        departmentName: this.newDepartmentName,
-        subCategories: [],
+      // สร้างข้อมูลห้องจำลองสำหรับอาคารใหม่
+      const newBuildingCode = this.newDepartmentName.toUpperCase().replace(/\s/g, '');
+      const newRoom = {
+          "BUILDINGCODE": newBuildingCode,
+          "CAPACITY": 0,
+          "INDEX": this.rawBuildingsData.length,
+          "ROOMCODE": "9999",
+          "ROOMID": new Date().getTime(), // ใช้เวลาปัจจุบันเป็น ID
+          "ROOMNAME": `${newBuildingCode} 9999 (New)`,
+          "ROOMSTATUS": "N",
+          "ROOMTYPECODE": "0",
+          "ROOMTYPENAME": "New Building Default Room"
       };
 
-      this.buildingsData.push(newDept);
+      // เพิ่มข้อมูลเข้าไปในข้อมูลดิบ
+      this.rawBuildingsData.push(newRoom);
       this.addModal = false;
     },
+
+    deleteRoom(room) {
+        // ลบห้องออกจากข้อมูลดิบโดยใช้ ROOMID
+        const initialLength = this.rawBuildingsData.length;
+        this.rawBuildingsData = this.rawBuildingsData.filter(r => r.ROOMID !== room.ROOMID);
+        
+        if (this.rawBuildingsData.length < initialLength) {
+            alert(`ลบห้อง ${room.ROOMCODE} (ID: ${room.ROOMID}) เรียบร้อยแล้ว`);
+        } else {
+            alert(`ไม่พบห้อง ${room.ROOMCODE} (ID: ${room.ROOMID}) ที่จะลบ`);
+        }
+    },
+    
+    // Method สำหรับลบทั้งอาคาร (ลบทุกห้องที่มี BUILDINGCODE นี้)
+    deleteBuilding(buildingCode) {
+        if (confirm(`คุณต้องการลบอาคาร ${buildingCode} และห้องทั้งหมดในอาคารนี้หรือไม่?`)) {
+            const initialLength = this.rawBuildingsData.length;
+            this.rawBuildingsData = this.rawBuildingsData.filter(r => r.BUILDINGCODE !== buildingCode);
+            alert(`ลบอาคาร ${buildingCode} (ห้องจำนวน ${initialLength - this.rawBuildingsData.length} ห้อง) เรียบร้อยแล้ว`);
+        }
+    }
   },
 };
 </script>

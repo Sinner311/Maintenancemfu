@@ -12,10 +12,8 @@
               :items="tableUsers"
               :fields="tableFields"
               hover
-              sorter
               pagination
-              :items-per-page="5"
-              column-filter
+              :items-per-page="10"
               table-filter
               items-per-page-select
             >
