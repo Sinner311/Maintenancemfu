@@ -53,33 +53,93 @@
             <CCollapse :show="details.includes(index)">
               <div class="p-4 bg-light">
                 
-                <!-- 🔹 รายละเอียดการแจ้งซ่อม ด้านบน Timeline -->
-                <div class="mb-4">
-                  <h6 class="fw-bold mb-2 text-primary">รายละเอียดการแจ้งซ่อม</h6>
-                  <div><strong>Ticket ID:</strong> {{ item.id + 1 }}</div>
-                  <div><strong>เลขที่แจ้งซ่อม:</strong> {{ item.ticket_number }}</div>
-                  <div><strong>ประเภท:</strong> {{ item.category }}</div>
-                  <div><strong>รายละเอียด:</strong> {{ item.issue_detail }}</div>
-                  <div><strong>ผู้แจ้ง:</strong> {{ item.username }}</div>
-                  <div><strong>วันที่แจ้ง:</strong> {{ item.reported_at_date }} {{ item.reported_at_time }} น.</div>
-                  <div><strong>สถานะ:</strong> {{ item.status }}</div>
+                <!-- Header Section -->
+                <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                  <h5 class="mb-0 fw-bold">ใบแจ้งซ่อม / ใบงาน (WORK ORDER)</h5>
+                  <div class="badge bg-primary text-white px-3 py-2" style="font-size: 14px;">
+                    หมายเลขในงาน<br>{{ item.ticket_number }}
+                  </div>
                 </div>
 
-                <!-- 🔹 Timeline -->
-                <ul class="timeline">
-                  <li>
-                    <div class="timeline-date text-success">
-                      17 มกราคม 2568 <br />12.30 pm
+                <!-- รายละเอียดการแจ้งซ่อม -->
+                <div class="mb-4 p-3 bg-white rounded border">
+                  <h6 class="fw-bold mb-3 text-primary">
+                    <i class="cil-clipboard me-2"></i>รายละเอียดการแจ้งซ่อม
+                  </h6>
+                  <div class="row">
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">Ticket ID:</span>
+                      <strong class="ms-2">{{ item.id + 1 }}</strong>
                     </div>
-                    <div class="timeline-content text-success fw-bold">
-                      มอบหมายงานให้ช่างเรียบร้อย
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">เลขที่แจ้งซ่อม:</span>
+                      <strong class="ms-2">{{ item.ticket_number }}</strong>
                     </div>
-                  </li>
-                  <li><div class="timeline-content">ตรวจเช็คหน้างานเรียบร้อย</div></li>
-                  <li><div class="timeline-content">กำลังดำเนินการซ่อมแซม</div></li>
-                  <li><div class="timeline-content">งานซ่อมล่าช้า</div></li>
-                  <li><div class="timeline-content">งานเสร็จสิ้น</div></li>
-                </ul>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">ประเภท:</span>
+                      <strong class="ms-2">{{ item.category }}</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">ผู้แจ้ง:</span>
+                      <strong class="ms-2">{{ item.username }}</strong>
+                    </div>
+                    <div class="col-12 mb-2">
+                      <span class="text-muted">รายละเอียด:</span>
+                      <strong class="ms-2">{{ item.issue_detail }}</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">วันที่แจ้ง:</span>
+                      <strong class="ms-2">{{ item.reported_at_date }} {{ item.reported_at_time }} น.</strong>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                      <span class="text-muted">สถานะ:</span>
+                      <CBadge :color="getBadge(item.status)" class="ms-2">
+                        {{ item.status }}
+                      </CBadge>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Timeline Work Order (แนวนอน) -->
+                <div class="work-order-timeline">
+                  <div class="timeline-line"></div>
+                  
+                  <!-- Step 1: User/ผู้แจ้ง -->
+                  <div class="timeline-step active">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">กำลังดำเนินการ</div>
+                      <div class="step-role">User/ผู้แจ้ง</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 2: Supervisor/ผู้รับเรื่อง -->
+                  <div class="timeline-step">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">N/A</div>
+                      <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 3: Technician/ช่างซ่อม -->
+                  <div class="timeline-step">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">N/A</div>
+                      <div class="step-role">Technician/ช่างซ่อม</div>
+                    </div>
+                  </div>
+
+                  <!-- Step 4: เสร็จสิ้น -->
+                  <div class="timeline-step">
+                    <div class="step-circle"></div>
+                    <div class="step-label">
+                      <div class="step-status">N/A</div>
+                      <div class="step-role">เสร็จสิ้น</div>
+                    </div>
+                  </div>
+                </div>
 
               </div>
             </CCollapse>
@@ -111,7 +171,7 @@ export default {
         issue_user: `${item.category} ${item.issue_detail} ${item.username}`,
       })),
       fields,
-      details: [], // เก็บ index ของแถวที่ถูกเปิด
+      details: [],
     };
   },
   methods: {
@@ -138,67 +198,105 @@ export default {
 </script>
 
 <style scoped>
-/* Timeline Style */
-.timeline {
+/* Work Order Timeline - แนวนอน */
+.work-order-timeline {
   position: relative;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  margin-left: 50%;
-  transform: translateX(-50%);
-}
-
-.timeline::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: #666;
-  transform: translateX(-50%);
-  border-radius: 10px;
-}
-
-.timeline li {
-  position: relative;
-  margin: 50px 0;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  padding: 40px 20px;
+  margin-top: 30px;
 }
 
-.timeline li::before {
-  content: "";
+.timeline-line {
   position: absolute;
-  left: 50%;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  background: #666;
+  top: 50px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 3px;
+  background: linear-gradient(to right, #007bff 25%, #e0e0e0 25%);
+  z-index: 0;
+}
+
+.timeline-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  z-index: 1;
+}
+
+.step-circle {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  transform: translate(-50%, 0);
-  z-index: 2;
-  border: 2px solid white;
+  background: #fff;
+  border: 4px solid #e0e0e0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 12px;
 }
 
-.timeline li:first-child::before {
+.timeline-step.active .step-circle {
   background: #007bff;
+  border-color: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
 }
 
-.timeline-date {
-  width: 45%;
-  text-align: right;
-  font-size: 14px;
-  color: #2eb85c;
+.step-label {
+  text-align: center;
+  max-width: 120px;
+}
+
+.step-status {
+  font-size: 12px;
   font-weight: 600;
-  padding-right: 20px;
+  color: #6c757d;
+  margin-bottom: 4px;
 }
 
-.timeline-content {
-  width: 45%;
-  text-align: left;
-  padding-left: 20px;
-  color: #333;
+.timeline-step.active .step-status {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.step-role {
+  font-size: 11px;
+  color: #6c757d;
+  line-height: 1.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .work-order-timeline {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  
+  .timeline-line {
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    height: auto;
+    background: linear-gradient(to bottom, #007bff 25%, #e0e0e0 25%);
+  }
+  
+  .timeline-step {
+    flex-direction: row;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  
+  .step-circle {
+    margin-right: 15px;
+    margin-bottom: 0;
+  }
+  
+  .step-label {
+    text-align: left;
+    max-width: none;
+  }
 }
 </style>
