@@ -21,7 +21,11 @@
           <CRow>
             <CCol sm="4">
               <label class="lbl">ชื่อผู้แจ้ง</label>
-              <CInput value="นายสมสมสม ชายชายชาย" class="mb-0" plaintext readonly
+              <CInput
+                value="นายสมสมสม ชายชายชาย"
+                class="mb-0"
+                plaintext
+                readonly
             /></CCol>
             <CCol sm="4">
               <label class="lbl">เบอร์โทรศัพท์</label>
@@ -54,8 +58,6 @@
             class="rounded-input"
           />
         </div>
-
-       
 
         <div class="mb-3">
           <label class="lbl">พื้นที่ปฏิบัติงาน</label>
@@ -100,7 +102,7 @@
           </div>
         </transition>
 
-         <div class="my-3">
+        <div class="my-3">
           <label class="lbl">ปัญหา/งานซ่อม</label>
           <div class="editor-wrapper">
             <quill-editor

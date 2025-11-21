@@ -6,46 +6,42 @@
       </h4>
     </CCardHeader>
     <CCardBody class="p-4">
-      <!-- Timeline Work Order (แนวนอน) -->
-      <div class="work-order-timeline">
-        <div class="timeline-line"></div>
+      <!-- Timeline Work Order -->
+            <div class="work-order-timeline">
+              <div class="timeline-line" :style="getTimelineStyle()"></div>
+              
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 1 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 1 ? 'รับเรื่องแล้ว' : 'N/A' }}</div>
+                  <div class="step-role">User/ผู้แจ้ง</div>
+                </div>
+              </div>
 
-        <!-- Step 1: User/ผู้แจ้ง -->
-        <div class="timeline-step active">
-          <div class="step-circle"></div>
-          <div class="step-label">
-            <div class="step-status">กำลังดำเนินการ</div>
-            <div class="step-role">User/ผู้แจ้ง</div>
-          </div>
-        </div>
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 2 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 2 ? 'รับงานแล้ว' : 'N/A' }}</div>
+                  <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
+                </div>
+              </div>
 
-        <!-- Step 2: Supervisor/ผู้รับเรื่อง -->
-        <div class="timeline-step">
-          <div class="step-circle"></div>
-          <div class="step-label">
-            <div class="step-status">N/A</div>
-            <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
-          </div>
-        </div>
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 3 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 3 ? 'กำลังดำเนินการ' : 'N/A' }}</div>
+                  <div class="step-role">Technician/ช่างซ่อม</div>
+                </div>
+              </div>
 
-        <!-- Step 3: Technician/ช่างซ่อม -->
-        <div class="timeline-step">
-          <div class="step-circle"></div>
-          <div class="step-label">
-            <div class="step-status">N/A</div>
-            <div class="step-role">Technician/ช่างซ่อม</div>
-          </div>
-        </div>
-
-        <!-- Step 4: เสร็จสิ้น -->
-        <div class="timeline-step">
-          <div class="step-circle"></div>
-          <div class="step-label">
-            <div class="step-status">N/A</div>
-            <div class="step-role">เสร็จสิ้น</div>
-          </div>
-        </div>
-      </div>
+              <div :class="['timeline-step', { active: selectedReport.currentStep >= 4 }]">
+                <div class="step-circle"></div>
+                <div class="step-label">
+                  <div class="step-status">{{ selectedReport.currentStep >= 4 ? 'เสร็จสิ้น' : 'N/A' }}</div>
+                  <div class="step-role">เสร็จสิ้น</div>
+                </div>
+              </div>
+            </div>
       <CForm class="mx-5 my-2">
         <div class="d-flex align-items-center mb-4">
           <div class="icon-box mr-3" style="background-color: #fff0c4">
@@ -290,6 +286,12 @@ export default {
   methods: {
     validator(val) {
       return val ? val.length >= 4 : false;
+    },
+    getTimelineStyle() {
+      const progress = ((this.selectedReport.currentStep - 1) / 3) * 100;
+      return {
+        background: `linear-gradient(to right, #007bff ${progress}%, #e0e0e0 ${progress}%)`
+      };
     },
   },
 };

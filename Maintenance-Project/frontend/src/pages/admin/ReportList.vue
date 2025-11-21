@@ -4,44 +4,69 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
+          <CCardHeader
+            style="background-color: #8c1007"
+            class="border-bottom d-flex justify-content-between align-items-center"
+          >
             <h4 class="card-title mb-0 text-white">
-              <CIcon name="cil-window-restore" size="xl"/> งานซ่อม
+              <CIcon name="cil-window-restore" size="xl" /> งานซ่อม
             </h4>
           </CCardHeader>
-          
+
           <CCardBody>
             <!-- Custom Tabs -->
             <div class="custom-tabs">
               <div class="tabs-header">
-                <button 
+                <button
                   :class="['tab-item', { active: activeTab === 'report' }]"
                   @click="activeTab = 'report'"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                    <polyline points="14 2 14 8 20 8"/>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                    />
+                    <polyline points="14 2 14 8 20 8" />
                   </svg>
-                  <span style="font-size: 15px; font-weight: 500;">รายการแจ้งซ่อมทั้งหมด</span>
+                  <span style="font-size: 15px; font-weight: 500"
+                    >รายการแจ้งซ่อมทั้งหมด</span
+                  >
                 </button>
-                <button 
+                <button
                   :class="['tab-item', { active: activeTab === 'history' }]"
                   @click="activeTab = 'history'"
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+                    <path
+                      d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                    />
                   </svg>
-                  <span style="font-size: 15px; font-weight: 500;">ประวัติการแจ้งซ่อมทั้งหมด</span>
+                  <span style="font-size: 15px; font-weight: 500"
+                    >ประวัติการแจ้งซ่อมทั้งหมด</span
+                  >
                 </button>
               </div>
-              
+
               <div class="tabs-content">
                 <div v-show="activeTab === 'report'" class="tab-panel">
-                  <Ureportable @show-detail="handleShowDetail" />
+                  <Areportable @show-detail="handleShowDetail" />
                 </div>
                 <div v-show="activeTab === 'history'" class="tab-panel">
-                  <Uhistorytable @show-detail="handleShowDetail" />
+                  <Ahistorytable @show-detail="handleShowDetail" />
                 </div>
               </div>
             </div>
@@ -50,7 +75,14 @@
 
         <!-- Report Detail Card - แสดงเมื่อมีการเลือก -->
         <CCard v-if="selectedReport" class="mt-4">
-          <CCardHeader style="background-color: #8c1007" class="border-bottom d-flex justify-content-between align-items-center">
+          <UserReportDetail
+            :report="selectedReport"
+            @close-detail="closeDetail"
+          />
+          <CCardHeader
+            style="background-color: #8c1007"
+            class="border-bottom d-flex justify-content-between align-items-center"
+          >
             <h4 class="text-white card-title mb-0">
               <CIcon name="cil-description" size="xl" /> รายละเอียดใบแจ้งซ่อม
             </h4>
@@ -58,126 +90,326 @@
               <CIcon name="cil-x" />
             </CButton>
           </CCardHeader>
-          
+
           <CCardBody class="p-4">
             <!-- Timeline Work Order -->
             <div class="work-order-timeline">
               <div class="timeline-line" :style="getTimelineStyle()"></div>
-              
-              <div :class="['timeline-step', { active: selectedReport.currentStep >= 1 }]">
+
+              <div
+                :class="[
+                  'timeline-step',
+                  { active: selectedReport.currentStep >= 1 },
+                ]"
+              >
                 <div class="step-circle"></div>
                 <div class="step-label">
-                  <div class="step-status">{{ selectedReport.currentStep >= 1 ? 'รับเรื่องแล้ว' : 'N/A' }}</div>
+                  <div class="step-status">
+                    {{
+                      selectedReport.currentStep >= 1 ? "รับเรื่องแล้ว" : "N/A"
+                    }}
+                  </div>
                   <div class="step-role">User/ผู้แจ้ง</div>
                 </div>
               </div>
 
-              <div :class="['timeline-step', { active: selectedReport.currentStep >= 2 }]">
+              <div
+                :class="[
+                  'timeline-step',
+                  { active: selectedReport.currentStep >= 2 },
+                ]"
+              >
                 <div class="step-circle"></div>
                 <div class="step-label">
-                  <div class="step-status">{{ selectedReport.currentStep >= 2 ? 'รับงานแล้ว' : 'N/A' }}</div>
+                  <div class="step-status">
+                    {{ selectedReport.currentStep >= 2 ? "รับงานแล้ว" : "N/A" }}
+                  </div>
                   <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
                 </div>
               </div>
 
-              <div :class="['timeline-step', { active: selectedReport.currentStep >= 3 }]">
+              <div
+                :class="[
+                  'timeline-step',
+                  { active: selectedReport.currentStep >= 3 },
+                ]"
+              >
                 <div class="step-circle"></div>
                 <div class="step-label">
-                  <div class="step-status">{{ selectedReport.currentStep >= 3 ? 'กำลังดำเนินการ' : 'N/A' }}</div>
+                  <div class="step-status">
+                    {{
+                      selectedReport.currentStep == 3
+                        ? "รอดำเนินการ"
+                        : selectedReport.currentStep == 4
+                        ? "กำลังดำเนินการ"
+                        : selectedReport.currentStep >= 5
+                        ? "ซ่อมเสร็จแล้ว"
+                        : "N/A"
+                    }}
+                  </div>
                   <div class="step-role">Technician/ช่างซ่อม</div>
                 </div>
               </div>
 
-              <div :class="['timeline-step', { active: selectedReport.currentStep >= 4 }]">
+              <div
+                :class="[
+                  'timeline-step',
+                  { active: selectedReport.currentStep >= 5 },
+                ]"
+              >
                 <div class="step-circle"></div>
                 <div class="step-label">
-                  <div class="step-status">{{ selectedReport.currentStep >= 4 ? 'เสร็จสิ้น' : 'N/A' }}</div>
+                  <div class="step-status">
+                    {{ selectedReport.currentStep >= 5 ? "เสร็จสิ้น" : "N/A" }}
+                  </div>
                   <div class="step-role">เสร็จสิ้น</div>
                 </div>
               </div>
             </div>
 
-            <!-- รายละเอียด -->
             <CForm class="mx-5 my-2">
               <!-- ส่วนของผู้ขอใช้ใบงาน -->
+
               <div class="d-flex align-items-center mb-4">
                 <div class="icon-box mr-3" style="background-color: #fff0c4">
                   <span style="font-size: 1.5rem">🛠️</span>
                 </div>
                 <div>
                   <h5 class="m-0 font-weight-bold">ส่วนของผู้ขอใช้ใบงาน</h5>
-                  <small class="text-muted">รายละเอียดผู้แจ้ง ปัญหาและสถานที่</small>
+                  <small class="text-muted"
+                    >รายละเอียดผู้แจ้ง ปัญหาและสถานที่</small
+                  >
                 </div>
               </div>
 
               <div class="mb-4">
                 <CRow>
                   <CCol sm="4">
-                    <label class="lbl">วันที่/เวลา แจ้ง:</label>
-                    <CInput :value="`${selectedReport.reported_at_date} ${selectedReport.reported_at_time} น.`" plaintext readonly />
+                    <CRow class="mb-4">
+                      <CCol>
+                        <label class="lbl">วันที่/เวลา แจ้ง:</label>
+                        <CInput
+                          :value="`${selectedReport.reported_at_date} ${selectedReport.reported_at_time} น.`"
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                    <CRow>
+                      <CCol>
+                        <label class="lbl">เบอร์โทรศัพท์:</label>
+                        <CInput
+                          value="090-000-0000"
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
                   </CCol>
                   <CCol sm="4">
-                    <label class="lbl">ชื่อผู้แจ้ง:</label>
-                    <CInput :value="selectedReport.username" plaintext readonly />
+                    <CRow class="mb-4">
+                      <CCol>
+                        <label class="lbl">ชื่อผู้แจ้ง:</label>
+                        <CInput
+                          :value="selectedReport.username"
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                    <CRow>
+                      <CCol>
+                        <label class="lbl">หน่วยงาน:</label>
+                        <CInput value="ไฟฟ้า" class="mb-0" plaintext readonly />
+                      </CCol>
+                    </CRow>
                   </CCol>
                   <CCol sm="4">
-                    <label class="lbl">เลขที่แจ้งซ่อม:</label>
-                    <CInput :value="selectedReport.ticket_number" plaintext readonly />
+                    <CRow class="mb-4">
+                      <CCol>
+                        <label class="lbl">สถานที่/ตึก:</label>
+                        <CInput value="C2" class="mb-0" plaintext readonly />
+                      </CCol>
+                    </CRow>
+                    <CRow class="mb-4">
+                      <CCol>
+                        <label class="lbl">หมายเลขห้อง:</label>
+                        <CInput
+                          value="C2-204"
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
                   </CCol>
                 </CRow>
-                <CRow class="mt-3">
-                  <CCol sm="6">
+                <CRow class="mb-4">
+                  <CCol>
                     <label class="lbl">ประเภทงาน:</label>
-                    <CInput :value="selectedReport.category" plaintext readonly />
-                  </CCol>
-                  <CCol sm="6">
-                    <label class="lbl">สถานะ:</label>
-                    <CBadge :color="getBadge(selectedReport.status)" style="font-size: 14px; padding: 6px 12px;">
-                      {{ selectedReport.status }}
-                    </CBadge>
+                    <CInput
+                      :value="selectedReport.category"
+                      class="mb-0"
+                      plaintext
+                      readonly
+                    />
                   </CCol>
                 </CRow>
-                <CRow class="mt-3">
+                <CRow class="mb-4">
                   <CCol>
                     <label class="lbl">รายละเอียดปัญหา:</label>
-                    <CInput :value="selectedReport.issue_detail" plaintext readonly />
+                    <CInput
+                      value="ปลั๊กไฟชำรุด"
+                      class="mb-0"
+                      plaintext
+                      readonly
+                    />
                   </CCol>
                 </CRow>
               </div>
+              <div v-if="selectedReport.currentStep >= 2">
+                <hr class="my-4 border-dashed" />
+                <!-- ส่วนของผู้รับใบงาน -->
+                <div class="d-flex align-items-center mb-4">
+                  <div class="icon-box mr-3" style="background-color: #fff0c4">
+                    <span style="font-size: 1.5rem">🏢</span>
+                  </div>
+                  <div>
+                    <h5 class="m-0 font-weight-bold">ส่วนของผู้รับใบงาน</h5>
+                  </div>
+                </div>
+                <CRow>
+                  <CCol sm="4">
+                    <CRow>
+                      <CCol>
+                        <label class="lbl">วันที่/เวลา รับใบงาน:</label>
+                        <CInput
+                          value="20/09/2025 10:00 น."
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                  </CCol>
+                  <CCol sm="4">
+                    <CRow>
+                      <CCol>
+                        <label class="lbl">ชื่อผู้รับผิดชอบงาน:</label>
+                        <CInput
+                          value="นายพง กร"
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                  </CCol>
+                  <CCol sm="4">
+                    <CRow>
+                      <CCol>
+                        <label class="lbl">ชื่อผู้ดำเนินการ:</label>
+                        <CInput
+                          value="นายอะ ทิต"
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                  </CCol>
+                </CRow>
+              </div>
+              <div v-if="selectedReport.currentStep >= 3">
+                <hr class="my-4 border-dashed" />
+                <!-- ส่วนของช่างผู้รับงาน -->
+                <div class="d-flex align-items-center mb-4">
+                  <div class="icon-box mr-3" style="background-color: #fff0c4">
+                    <span style="font-size: 1.5rem">🧑‍🔧</span>
+                  </div>
+                  <div>
+                    <h5 class="m-0 font-weight-bold">ส่วนของช่างผู้รับงาน</h5>
+                  </div>
+                </div>
 
-              <hr class="my-4 border-dashed" />
-
-              <!-- ปุ่มกลับ -->
-              <div class="text-center">
-                <CButton color="secondary" @click="closeDetail" size="lg">
-                  ปิดรายละเอียด
-                </CButton>
+                <CRow class="mb-4">
+                  <CCol sm="4">
+                    <CRow>
+                      <CCol>
+                        <label class="lbl">วันที่/เวลา รับงาน:</label>
+                        <CInput
+                          value="20/09/2025 10:00 น."
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                  </CCol>
+                  <CCol sm="4">
+                    <CRow v-if="selectedReport.currentStep >= 4">
+                      <CCol>
+                        <label class="lbl">วันที่/เวลา เริ่มงาน:</label>
+                        <CInput
+                          value="20/09/2025 10:00 น."
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                  </CCol>
+                  <CCol sm="4">
+                    <CRow>
+                      <CCol v-if="selectedReport.currentStep >= 5">
+                        <label class="lbl">วันที่/เวลา เสร็จงาน:</label>
+                        <CInput
+                          value="20/09/2025 10:00 น."
+                          class="mb-0"
+                          plaintext
+                          readonly
+                        />
+                      </CCol>
+                    </CRow>
+                  </CCol>
+                </CRow>
+                <CRow class="mb-4">
+                  <CCol v-if="selectedReport.currentStep >= 5">
+                    <label class="lbl">รายละเอียดผลการซ่อม:</label>
+                    <CInput
+                      value="ปลั๊กไฟชำรุด"
+                      class="mb-0"
+                      plaintext
+                      readonly
+                    />
+                  </CCol>
+                </CRow>
               </div>
             </CForm>
           </CCardBody>
         </CCard>
       </CCol>
     </CRow>
-    
+
     <SendReport v-model="sendReportModal" />
   </div>
 </template>
 
 <script>
-import Uhistorytable from "../../components/user/Uhistorytable.vue";
-import Ureportable from "../../components/user/Ureportable.vue";
-import SendReport from "../../components/user/SendReport";
+import Ahistorytable from "../../components/admin/Ahistorytable.vue";
+import Areportable from "../../components/admin/Areportable.vue";
 
 export default {
   name: "Dashboard",
   components: {
-    Ureportable,
-    Uhistorytable,
-    SendReport,
+    Areportable,
+    Ahistorytable,
   },
   data() {
     return {
-      sendReportModal: false,
       activeTab: "report",
       selectedReport: null, // เก็บข้อมูลรายการที่เลือก
     };
@@ -186,58 +418,80 @@ export default {
     handleShowDetail(item) {
       // กำหนด currentStep ตามสถานะ
       let currentStep = 1;
-      switch(item.status) {
-        case 'รอดำเนินการ':
+      switch (item.status) {
+        case "ส่งเรื่องแล้ว":
           currentStep = 1;
           break;
-        case 'รับเรื่องแล้ว':
+        case "รับเรื่องแล้ว":
           currentStep = 2;
           break;
-        case 'กำลังดำเนินการ':
+        case "รอดำเนินการ":
           currentStep = 3;
           break;
-        case 'เสร็จสิ้น':
+        case "กำลังดำเนินการ":
           currentStep = 4;
           break;
+        case "เสร็จสิ้น":
+          currentStep = 5;
+          break;
       }
-      
+
       this.selectedReport = {
         ...item,
-        currentStep
+        currentStep,
       };
-      
+
       // Scroll to detail
       this.$nextTick(() => {
-        const detailCard = document.querySelector('.mt-4');
+        const detailCard = document.querySelector(".mt-4");
         if (detailCard) {
-          detailCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          detailCard.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       });
     },
-    
+
     closeDetail() {
       this.selectedReport = null;
     },
-    
+
     getTimelineStyle() {
-      const progress = ((this.selectedReport.currentStep - 1) / 3) * 100;
+      let progress = 1;
+      switch (this.selectedReport.currentStep) {
+        case 1:
+          progress = 2;
+          break;
+        case 2:
+          progress = 33;
+          break;
+        case 3:
+          progress = 66;
+          break;
+        case 4:
+          progress = 66;
+          break;
+        case 5:
+          progress = 100;
+          break;
+      }
       return {
-        background: `linear-gradient(to right, #007bff ${progress}%, #e0e0e0 ${progress}%)`
+        background: `linear-gradient(to right, #007bff ${progress}%, #e0e0e0 ${progress}%)`,
       };
     },
-    
+
     getBadge(status) {
       switch (status) {
         case "กำลังดำเนินการ":
-          return "success";
-        case "เสร็จสิ้น":
-          return "secondary";
-        case "รับเรื่องแล้ว":
           return "warning";
         case "รอดำเนินการ":
-          return "danger";
+          return "warning";
+        case "รับเรื่องแล้ว":
+          return "info";
+        case "ส่งเรื่องแล้ว":
+          return "info";
+        case "เสร็จสิ้น":
+          return "success";
         default:
-          return "primary";
+          return "light";
       }
     },
   },
@@ -278,12 +532,14 @@ export default {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 6px 30px rgba(16, 185, 129, 0.8), 0 0 50px rgba(16, 185, 129, 0.5);
+    box-shadow: 0 6px 30px rgba(16, 185, 129, 0.8),
+      0 0 50px rgba(16, 185, 129, 0.5);
     transform: scale(1.05);
   }
 }
@@ -411,8 +667,14 @@ export default {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mt-4 {

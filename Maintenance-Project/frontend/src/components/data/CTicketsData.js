@@ -1,0 +1,10 @@
+const ticketsData = [
+  { ticket_id: "1", ticket_number: "20250922-ELEC-001", username: 'Samppa Nori', reporter_phone: "0900000000", issue_detail: "หลอดไฟไม่ติด", reported_at_date: "5/10/2025", reported_at_time: "10:00", BUILDINGCODE: "S7", ROOMNAME: "S7-B 333", category: 'ระบบไฟฟ้า', subcategory: 'ระบบไฟฟ้า', status: 'กำลังดำเนินการ' ,report_received_at_date: "5/10/2025",report_received_at_time: "11:00",supervisor: 'นายสมชาย ใจดี',technician: 'นายสมปอง แก้ไขเก่ง',received_at_date: "5/10/2025",received_at_time: "11:00",in_progress_at_date: "5/10/2025",in_progress_at_time: "11:00",completed_at_date: "5/10/2025",completed_at_time: "11:00",repair_details:"ดี"},
+  { ticket_id: "2", ticket_number: "20250922-ELEC-001", username: 'Chetan Mohamed', reporter_phone: "0900000000", issue_detail: "น้ำไม่ไหล", reported_at_date: "3/10/2025", reported_at_time: "10:00", BUILDINGCODE: "S7", ROOMNAME: "S7-B 333", category: 'ระบบประปา', subcategory: 'ระบบไฟฟ้า', status: 'รับเรื่องแล้ว' ,report_received_at_date: "3/10/2025",report_received_at_time: "11:00",supervisor: 'นายสมชาย ใจดี',technician: 'นายสมปอง แก้ไขเก่ง'},
+  { ticket_id: "3", ticket_number: "20250922-ELEC-001", username: 'Derick Maximinus', reporter_phone: "0900000000", issue_detail: "หลอดไฟไม่ติด", reported_at_date: "2/10/2025", reported_at_time: "10:00", BUILDINGCODE: "S7", ROOMNAME: "S7-B 333", category: 'ระบบไฟฟ้า', subcategory: 'ระบบไฟฟ้า', status: 'ส่งเรื่องแล้ว' },
+  { ticket_id: "4", ticket_number: "20250922-ELEC-001", username: 'Samppa Nori', reporter_phone: "0900000000", issue_detail: "หลอดไฟไม่ติด", reported_at_date: "5/10/2025", reported_at_time: "10:00", BUILDINGCODE: "S7", ROOMNAME: "S7-B 333", category: 'ระบบไฟฟ้า', subcategory: 'ระบบไฟฟ้า', status: 'รอดำเนินการ' ,report_received_at_date: "5/10/2025",report_received_at_time: "11:00",supervisor: 'นายสมชาย ใจดี',technician: 'นายสมปอง แก้ไขเก่ง',received_at_date: "5/10/2025",received_at_time: "11:00"},
+]
+
+export default ticketsData
+
+
