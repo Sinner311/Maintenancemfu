@@ -1,10 +1,16 @@
 <template>
+  <CCard>
+  <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
+            <h4 class="card-title mb-0 text-white"><CIcon name="cil-briefcase" size="xl"/> จัดการข้อมูล ประเภทงาน</h4>
+            <CButton 
+              color="info" 
+              shape="pill"
+              @click="openAddModal"
+            >
+            เพิ่มหน่วยงาน</CButton>
+          </CCardHeader>
   <CCardBody>
-    <div class="ml-auto mr-3 mb-3 col-20">
-      <CButton block color="info" shape="pill" @click="openAddModal"
-        >เพิ่มหน่วยงาน</CButton
-      >
-    </div>
+
 
     <CDataTable :items="categoriesData" :fields="fields" hover pagination>
       <!-- แสดงชื่อแผนก -->
@@ -142,6 +148,7 @@
       </template>
     </CModal>
   </CCardBody>
+  </CCard>
 </template>
 
 <script>
