@@ -124,7 +124,7 @@
                 <div class="step-label">
                   <div class="step-status">
                     {{
-                      selectedReport.currentStep >= 1 ? "รับเรื่องแล้ว" : "N/A"
+                      selectedReport.currentStep >= 1 ? "ส่งเรื่องแล้ว" : "N/A"
                     }}
                   </div>
                   <div class="step-role">User/ผู้แจ้ง</div>
@@ -140,7 +140,7 @@
                 <div class="step-circle"></div>
                 <div class="step-label">
                   <div class="step-status">
-                    {{ selectedReport.currentStep >= 2 ? "รับงานแล้ว" : "N/A" }}
+                    {{ selectedReport.currentStep >= 2 ? "รับเรื่องแล้ว" : "N/A" }}
                   </div>
                   <div class="step-role">Supervisor/ผู้รับเรื่อง</div>
                 </div>
@@ -156,13 +156,7 @@
                 <div class="step-label">
                   <div class="step-status">
                     {{
-                      selectedReport.currentStep == 3
-                        ? "รอดำเนินการ"
-                        : selectedReport.currentStep == 4
-                        ? "กำลังดำเนินการ"
-                        : selectedReport.currentStep >= 5
-                        ? "ซ่อมเสร็จแล้ว"
-                        : "N/A"
+                      selectedReport.currentStep >= 3 ? "กำลังดำเนินการ" : "N/A"
                     }}
                   </div>
                   <div class="step-role">Technician/ช่างซ่อม</div>
@@ -172,13 +166,13 @@
               <div
                 :class="[
                   'timeline-step',
-                  { active: selectedReport.currentStep >= 5 },
+                  { active: selectedReport.currentStep >= 4 },
                 ]"
               >
                 <div class="step-circle"></div>
                 <div class="step-label">
                   <div class="step-status">
-                    {{ selectedReport.currentStep >= 5 ? "เสร็จสิ้น" : "N/A" }}
+                    {{ selectedReport.currentStep >= 4 ? "เสร็จสิ้น" : "N/A" }}
                   </div>
                   <div class="step-role">เสร็จสิ้น</div>
                 </div>
@@ -368,7 +362,7 @@
                     </CRow>
                   </CCol>
                   <CCol sm="4">
-                    <CRow v-if="selectedReport.currentStep >= 4">
+                    <CRow v-if="selectedReport.currentStep >= 3">
                       <CCol>
                         <label class="lbl">วันที่/เวลา เริ่มงาน:</label>
                         <CInput
@@ -382,7 +376,7 @@
                   </CCol>
                   <CCol sm="4">
                     <CRow>
-                      <CCol v-if="selectedReport.currentStep >= 5">
+                      <CCol v-if="selectedReport.currentStep >= 4">
                         <label class="lbl">วันที่/เวลา เสร็จงาน:</label>
                         <CInput
                           value="20/09/2025 10:00 น."
@@ -395,7 +389,7 @@
                   </CCol>
                 </CRow>
                 <CRow class="mb-4">
-                  <CCol v-if="selectedReport.currentStep >= 5">
+                  <CCol v-if="selectedReport.currentStep >= 4">
                     <label class="lbl">รายละเอียดผลการซ่อม:</label>
                     <CInput
                       value="ปลั๊กไฟชำรุด"
@@ -448,14 +442,11 @@ export default {
         case "รับเรื่องแล้ว":
           currentStep = 2;
           break;
-        case "รอดำเนินการ":
+        case "กำลังดำเนินการ":
           currentStep = 3;
           break;
-        case "กำลังดำเนินการ":
-          currentStep = 4;
-          break;
         case "เสร็จสิ้น":
-          currentStep = 5;
+          currentStep = 4;
           break;
       }
 
@@ -490,9 +481,6 @@ export default {
           progress = 66;
           break;
         case 4:
-          progress = 66;
-          break;
-        case 5:
           progress = 100;
           break;
       }
@@ -504,8 +492,6 @@ export default {
     getBadge(status) {
       switch (status) {
         case "กำลังดำเนินการ":
-          return "warning";
-        case "รอดำเนินการ":
           return "warning";
         case "รับเรื่องแล้ว":
           return "info";

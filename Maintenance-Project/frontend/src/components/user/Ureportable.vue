@@ -191,7 +191,7 @@ import ticketsData from "../data/CTicketsData";
 const fields = [
   { key: "reported_datetime", label: "วัน/เวลา แจ้ง", _style: "width:20%;" },
   { key: "ticket_number", label: "เลขที่แจ้งซ่อม", _style: "width:20%" },
-  { key: "issue_user", label: "รายละเอียด", _style: "width:60%;" },
+  { key: "issue_user", label: "รายละเอียด", _style: "width:55%;" },
   // { key: "username", label: "ผู้แจ้ง", _style: "width:60%;" },
   { key: "status", label: "สถานะ", _style: "width:15%;" },
   { key: "show_details", label: "", _style: "width:5%;" },
