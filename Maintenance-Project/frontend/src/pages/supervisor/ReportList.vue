@@ -5,7 +5,7 @@
       <CCol md="12">
         <CCard>
           <CCardHeader
-            style="background-color: #8c1007"
+            style="background-color: #145654"
             class="border-bottom d-flex justify-content-between align-items-center"
           >
             <h4 class="card-title mb-0 text-white">
@@ -80,7 +80,7 @@
             @close-detail="closeDetail"
           />
           <CCardHeader
-            style="background-color: #8c1007"
+            style="background-color: #145654"
             class="border-bottom d-flex justify-content-between align-items-center"
           >
             <h4 class="text-white card-title mb-0">
@@ -562,9 +562,10 @@ export default {
 }
 
 .tab-item.active {
-  color: #cd1212;
+  color: #000000;
   font-weight: 600;
-  border-bottom-color: #cd1212;
+  border-bottom-color: #2ba9a5;
+  background-color:#2ba9a5;
 }
 
 .lbl {

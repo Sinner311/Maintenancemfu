@@ -65,8 +65,8 @@
 
 <style>
 .custom-pagination .page-item.active .page-link {
-  background-color: #8C1007 !important; /* Example custom color */
-  border-color: #8C1007 !important;
+  background-color: #2ba9a5 !important; /* Example custom color */
+  border-color: #2ba9a5 !important;
   color: #ffffff;
 }
 

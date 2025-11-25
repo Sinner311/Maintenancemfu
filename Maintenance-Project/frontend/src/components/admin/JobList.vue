@@ -1,6 +1,6 @@
 <template>
   <CCard>
-  <CCardHeader style="background-color: #8C1007;" class="border-bottom d-flex justify-content-between align-items-center">
+  <CCardHeader style="background-color: #145654;" class="border-bottom d-flex justify-content-between align-items-center">
             <h4 class="card-title mb-0 text-white"><CIcon name="cil-briefcase" size="xl"/> จัดการข้อมูล ประเภทงาน</h4>
             <CButton 
               color="info" 

@@ -3,7 +3,7 @@
     <CRow>
       <CCol md="12">
         <CCard>
-          <CCardHeader style="background-color: #8C1007;" class="border-bottom">
+          <CCardHeader style="background-color: #145654;" class="border-bottom">
             <h4 class="text-white card-title mb-0"><CIcon name="cil-building" size="xl"/>  จัดการข้อมูล อาคาร</h4>
           </CCardHeader>
           <BuildingList/>

@@ -91,13 +91,16 @@ export default {
 /* --- 1. MFU Background + Repair Theme --- */
 .c-app {
   font-family: 'Sarabun', sans-serif;
-  background-color: #3dd5d0;
+  background-color: #145654;
 }
 
 .bg-mesh-mfu {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at center, #3dd5d0 0%, #2ba9a5 100%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #145654 0%, #2ba9a5 100%);
   z-index: 0;
   overflow: hidden;
 }
@@ -109,13 +112,21 @@ export default {
   opacity: 0.3;
   animation: float 15s infinite ease-in-out;
 }
+
 .blob-gold {
-  top: -20%; left: -10%; width: 600px; height: 600px;
+  top: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
   background: #5fe3df;
 }
+
 .blob-red {
-  bottom: -20%; right: -10%; width: 500px; height: 500px;
-  background: #2ba9a5;
+  bottom: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: #145654;
 }
 
 .floating-icon {
@@ -124,14 +135,36 @@ export default {
   z-index: 0;
   animation: floatIcon 20s infinite linear;
 }
-.icon-wrench { top: 15%; left: 10%; transform: rotate(-15deg) scale(4); }
-.icon-gear { bottom: 10%; left: 80%; transform: rotate(20deg) scale(5); animation-duration: 30s; }
-.icon-hammer { top: 60%; right: 85%; transform: rotate(45deg) scale(3); }
+
+.icon-wrench {
+  top: 15%;
+  left: 10%;
+  transform: rotate(-15deg) scale(4);
+}
+
+.icon-gear {
+  bottom: 10%;
+  left: 80%;
+  transform: rotate(20deg) scale(5);
+  animation-duration: 30s;
+}
+
+.icon-hammer {
+  top: 60%;
+  right: 85%;
+  transform: rotate(45deg) scale(3);
+}
 
 @keyframes floatIcon {
-  0% { transform: translateY(0) rotate(0deg) scale(4); }
-  50% { transform: translateY(-20px) rotate(10deg) scale(4); }
-  100% { transform: translateY(0) rotate(0deg) scale(4); }
+  0% {
+    transform: translateY(0) rotate(0deg) scale(4);
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg) scale(4);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(4);
+  }
 }
 
 /* --- 2. Card Styling --- */
@@ -142,33 +175,37 @@ export default {
   overflow: hidden;
 }
 
-/* --- Animated Stripe (แถบเลื่อนได้) --- */
+/* --- Animated Stripe --- */
 .animated-stripe {
   height: 8px;
   background: repeating-linear-gradient(
     45deg,
-     #d4af37,
-     #d4af37 10px,
-     #b31b1b 10px,
-     #b31b1b 20px
+    #d4af37,
+    #d4af37 10px,
+    #b31b1b 10px,
+    #b31b1b 20px
   );
-  background-size: 40px 100%; 
-  animation: stripe-flow 1.5s linear infinite; 
+  background-size: 40px 100%;
+  animation: stripe-flow 1.5s linear infinite;
 }
 
 @keyframes stripe-flow {
-  from { background-position: 0 0; }
-  to { background-position: 40px 0; } 
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
 }
 
-
-/* --- 3. Branding & Repair Badge --- */
+/* --- 3. Branding --- */
 .brand-title {
-  color: #2ba9a5;
+  color: #145654;
   font-weight: 800;
   margin-bottom: 0;
   font-size: 1.75rem;
 }
+
 .brand-subtitle {
   color: #555;
   font-weight: 800;
@@ -180,7 +217,7 @@ export default {
 .btn-google-premium {
   width: 100%;
   height: 56px;
-  background: linear-gradient(135deg, #3dd5d0 0%, #2ba9a5 100%);
+  background: linear-gradient(135deg, #145654 0%, #2ba9a5 100%);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -190,12 +227,12 @@ export default {
   transition: transform 0.2s, box-shadow 0.2s;
   box-shadow: 0 4px 12px rgba(61, 213, 208, 0.25);
 }
+
 .btn-google-premium:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(61, 213, 208, 0.4);
 }
 
-/* ปุ่มคู่มือ (ปุ่มรอง) */
 .btn-manual {
   background: transparent;
   border: 1px solid #e0e0e0;
@@ -208,11 +245,13 @@ export default {
   display: inline-flex;
   align-items: center;
 }
+
 .btn-manual:hover {
   background-color: #f5f5f5;
   border-color: #3dd5d0;
   color: #2ba9a5;
 }
+
 .btn-manual:active {
   transform: translateY(1px);
 }
@@ -226,14 +265,16 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .google-g {
   font-family: 'Arial', sans-serif;
   font-weight: 900;
   font-size: 26px;
-  background: linear-gradient(45deg, #4285F4, #34A853, #FBBC05, #EA4335);
+  background: linear-gradient(45deg, #4285f4, #34a853, #fbbc05, #ea4335);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .btn-text {
   flex-grow: 1;
   text-align: center;
@@ -244,13 +285,32 @@ export default {
 }
 
 /* --- 5. Footer --- */
-.text-mfu-red { color: #2ba9a5; }
-.icon-red { color: #2ba9a5; font-size: 0.9rem; }
-.separator { border-top: 1px dashed #ddd; }
+.text-mfu-red {
+  color: #2ba9a5;
+}
 
-.copyright-text small { color: #999; font-size: 0.75rem; }
+.icon-red {
+  color: #2ba9a5;
+  font-size: 0.9rem;
+}
+
+.separator {
+  border-top: 1px dashed #ddd;
+}
+
+.copyright-text small {
+  color: #999;
+  font-size: 0.75rem;
+}
 
 /* --- Animation --- */
-.fade-up-enter-active { transition: all 0.8s ease; }
-.fade-up-enter { opacity: 0; transform: translateY(30px); }
+.fade-up-enter-active {
+  transition: all 0.8s ease;
+}
+
+.fade-up-enter {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <CCard>
-    <CCardHeader style="background-color: #8C1007;" class="border-bottom">
+    <CCardHeader style="background-color: #145654;" class="border-bottom">
       <h4 class="text-white card-title mb-0"><CIcon name="cil-description" size="xl"/> รายละเอียดใบแจ้งซ่อม</h4>
     </CCardHeader>
     <CCardBody class="p-4">

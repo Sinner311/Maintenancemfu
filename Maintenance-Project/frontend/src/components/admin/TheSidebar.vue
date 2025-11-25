@@ -69,7 +69,8 @@ export default {
 
 <style scoped>
 .bg-style1{
-  background: linear-gradient(30deg,#FFF0C4 0%,#8C1007 40%);
+  background: linear-gradient(30deg,#FFF0C4 0%,#145654 40%);
 }
+
 </style>
 
