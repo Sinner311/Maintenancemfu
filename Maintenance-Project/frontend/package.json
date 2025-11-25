@@ -40,7 +40,7 @@
     "@coreui/vue-chartjs": "^1.0.5",
     "@coreui/vue-pro": "~3.2.3",
     "@vladmandic/face-api": "^1.7.14",
-    "axios": "^1.6.1",
+    "axios": "^1.13.2",
     "cross-domain-storage": "^2.0.7",
     "en": "^1.0.1",
     "less": "^3.9.0",

@@ -87,7 +87,7 @@ export default {
   name: "Login",
   methods: {
     handleLogin() {
-      this.$router.push('/dashboard'); 
+      this.$router.push('/mockup/demologin'); 
     },
     openManual() {
       // ยังไม่ทำอะไร (ว่างไว้)

@@ -89,6 +89,7 @@ const Message = () => import('@/views/apps/email/Message')
 //Mockup
 //login
 const MLogin = () => import('@/pages/view/Login')
+const MDemoLogin = () => import('@/pages/view/demoLogin')
 //Admin
 const ATheContainer = () => import('@/components/admin/TheContainer')
 const AReportList = () => import('@/pages/admin/ReportList')
@@ -536,6 +537,12 @@ export default new Router({
           path: 'login',
           name: 'Mlogin',
           component: MLogin,
+
+        },
+        {
+          path: 'demologin',
+          name: 'Mdemologin',
+          component: MDemoLogin,
 
         },
         {
