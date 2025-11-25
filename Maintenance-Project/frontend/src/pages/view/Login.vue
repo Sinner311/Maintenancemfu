@@ -54,20 +54,9 @@
 
                 <hr class="my-4 separator">
 
-                <div class="footer-info text-left">
-                  <h6 class="font-weight-bold text-mfu-red mb-2">
-                    <CIcon name="cil-contact" class="mr-1"/> ศูนย์บริการเทคโนโลยีสารสนเทศ
-                  </h6>
-                  
-                  <ul class="list-unstyled small text-muted mb-3 contact-list">
-                    <li><CIcon name="cil-location-pin" class="mr-2 icon-red"/> 333 หมู่ 1 ต.ท่าสุด อ.เมือง จ.เชียงราย 57100</li>
-                    <li><CIcon name="cil-phone" class="mr-2 icon-red"/> 0-5391-6411</li>
-                    <li><CIcon name="cil-envelope-closed" class="mr-2 icon-red"/> cits@mfu.ac.th</li>
-                    <li>Facebook : CITS MFU</li>
-                  </ul>
-
-                  <div class="copyright-text text-center mt-4 pt-3 border-top">
-                    <small>© 2025 ลิขสิทธิ์โดยศูนย์บริการเทคโนโลยีสารสนเทศ มหาวิทยาลัยแม่ฟ้าหลวง สงวนลิขสิทธิ์ทั้งหมด<br>© 2025 Center for Information Technology Services, Mae Fah Luang University. All rights reserved. </small>
+                <div class="footer-info text-center">
+                  <div class="copyright-text mt-4 pt-3">
+                    <small>© 2025 Copyright by Mae Fah Luang University. All rights reserved.</small>
                   </div>
                 </div>
 
@@ -102,13 +91,13 @@ export default {
 /* --- 1. MFU Background + Repair Theme --- */
 .c-app {
   font-family: 'Sarabun', sans-serif;
-  background-color: #800000;
+  background-color: #3dd5d0;
 }
 
 .bg-mesh-mfu {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(circle at center, #b31b1b 0%, #5e0d0d 100%);
+  background: radial-gradient(circle at center, #3dd5d0 0%, #2ba9a5 100%);
   z-index: 0;
   overflow: hidden;
 }
@@ -117,16 +106,16 @@ export default {
   position: absolute;
   border-radius: 50%;
   filter: blur(80px);
-  opacity: 0.4;
+  opacity: 0.3;
   animation: float 15s infinite ease-in-out;
 }
 .blob-gold {
   top: -20%; left: -10%; width: 600px; height: 600px;
-  background: #d4af37;
+  background: #5fe3df;
 }
 .blob-red {
   bottom: -20%; right: -10%; width: 500px; height: 500px;
-  background: #ff3333;
+  background: #2ba9a5;
 }
 
 .floating-icon {
@@ -158,10 +147,10 @@ export default {
   height: 8px;
   background: repeating-linear-gradient(
     45deg,
-    #d4af37,
-    #d4af37 10px,
-    #b31b1b 10px,
-    #b31b1b 20px
+     #d4af37,
+     #d4af37 10px,
+     #b31b1b 10px,
+     #b31b1b 20px
   );
   background-size: 40px 100%; 
   animation: stripe-flow 1.5s linear infinite; 
@@ -175,7 +164,7 @@ export default {
 
 /* --- 3. Branding & Repair Badge --- */
 .brand-title {
-  color: #800000;
+  color: #2ba9a5;
   font-weight: 800;
   margin-bottom: 0;
   font-size: 1.75rem;
@@ -191,7 +180,7 @@ export default {
 .btn-google-premium {
   width: 100%;
   height: 56px;
-  background: linear-gradient(135deg, #fd0000 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #3dd5d0 0%, #2ba9a5 100%);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -199,11 +188,11 @@ export default {
   align-items: center;
   padding: 0 6px;
   transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 4px 12px rgba(61, 213, 208, 0.25);
 }
 .btn-google-premium:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 8px 20px rgba(61, 213, 208, 0.4);
 }
 
 /* ปุ่มคู่มือ (ปุ่มรอง) */
@@ -221,8 +210,8 @@ export default {
 }
 .btn-manual:hover {
   background-color: #f5f5f5;
-  border-color: #b31b1b;
-  color: #b31b1b;
+  border-color: #3dd5d0;
+  color: #2ba9a5;
 }
 .btn-manual:active {
   transform: translateY(1px);
@@ -255,12 +244,11 @@ export default {
 }
 
 /* --- 5. Footer --- */
-.text-mfu-red { color: #b31b1b; }
-.icon-red { color: #b31b1b; font-size: 0.9rem; }
-.contact-list li { margin-bottom: 6px; display: flex; align-items: flex-start; }
+.text-mfu-red { color: #2ba9a5; }
+.icon-red { color: #2ba9a5; font-size: 0.9rem; }
 .separator { border-top: 1px dashed #ddd; }
 
-.copyright-text small { color: #aaa; font-size: 0.7rem; }
+.copyright-text small { color: #999; font-size: 0.75rem; }
 
 /* --- Animation --- */
 .fade-up-enter-active { transition: all 0.8s ease; }
